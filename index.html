@@ -175,27 +175,33 @@ header .brand span {
 }
 
 /* ===== Inline Brand Logos on Header ===== */
+/* ===== Brand logos on header (uniform size) ===== */
 .brand-logos-inline {
   display: flex;
   align-items: center;
   gap: 18px;
   margin-left: 30px;
+  flex-wrap: nowrap;
 }
 
-.brand-logos-inline img {
-  height: 55px;
-  width: auto;
-  border-radius: 8px;
-  background: white;
-  padding: 4px 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.brand-logos-inline .brandbox {
+  width: 120px;              /* กล่องเท่ากันทุกแบรนด์ */
+  height: 72px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 6px 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,.08);
+  display: grid;
+  place-items: center;       /* จัดรูปให้อยู่กลางกล่อง */
 }
 
-.brand-logos-inline img:hover {
-  transform: scale(1.07);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+.brand-logos-inline .brandbox img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;       /* ให้พอดีกล่องโดยไม่บิดรูป */
+  display: block;
 }
+
 </style>
 
   </style>
@@ -218,12 +224,13 @@ header .brand span {
 
   <!-- Brand Logos inline -->
   <div class="brand-logos-inline">
-    <img src="images/plearnpoong.png"   alt="เพลินพุง" loading="lazy">
-    <img src="images/tamtam.png"        alt="ตำตำ" loading="lazy">
-    <img src="images/tymesdiner.png"    alt="Tyme's Diner" loading="lazy">
-    <img src="images/thesouth.png"      alt="The South" loading="lazy">
-    <img src="images/theartoffood.png"  alt="The Art of Food" loading="lazy">
-  </div>
+  <div class="brandbox"><img src="images/brand1.png"   alt="เพลินพุง" loading="lazy"></div>
+  <div class="brandbox"><img src="images/brand2.png"        alt="ตำตำ" loading="lazy"></div>
+  <div class="brandbox"><img src="images/brand3.png"    alt="Tyme's Diner" loading="lazy"></div>
+  <div class="brandbox"><img src="images/brand4.png"      alt="The South" loading="lazy"></div>
+  <div class="brandbox"><img src="images/brand5.png"  alt="The Art of Food" loading="lazy"></div>
+</div>
+
 </div>
 
       <!-- Brand Logos -->
