@@ -175,31 +175,43 @@ header .brand span {
 }
 
 /* ===== Inline Brand Logos on Header ===== */
-/* ===== Brand logos on header (uniform size) ===== */
-.brand-logos-inline {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-left: 30px;
-  flex-wrap: nowrap;
+/* ===== Brand logos on HEADER (fixed box + contain) ===== */
+.nav__actions{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+
+.brand-logos-inline{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin-left:30px;
+  flex-wrap:nowrap;        /* ไม่ให้ตกบรรทัดบนจอใหญ่ */
 }
 
-.brand-logos-inline .brandbox {
-  width: 120px;              /* กล่องเท่ากันทุกแบรนด์ */
-  height: 72px;
-  background: #fff;
-  border-radius: 12px;
-  padding: 6px 10px;
-  box-shadow: 0 3px 8px rgba(0,0,0,.08);
-  display: grid;
-  place-items: center;       /* จัดรูปให้อยู่กลางกล่อง */
+.brand-logos-inline .brandbox{
+  width:130px;             /* กล่องเท่ากันทุกแบรนด์ */
+  height:78px;
+  background:#fff;
+  border-radius:14px;
+  padding:10px;            /* ขอบในเท่ากัน */
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  display:grid;
+  place-items:center;      /* จัดรูปให้อยู่กลางกล่อง */
+  overflow:hidden;         /* ซ่อนส่วนที่เกินกรอบ */
 }
 
-.brand-logos-inline .brandbox img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;       /* ให้พอดีกล่องโดยไม่บิดรูป */
-  display: block;
+.brand-logos-inline .brandbox img{
+  max-width:100%;
+  max-height:100%;
+  width:auto;
+  height:auto;
+  object-fit:contain;      /* ให้พอดีกล่องโดยไม่บิดรูป */
+  display:block;
+  margin:0;
+}
+
+/* ถ้าไม่อยากให้ hover แล้วล้นกรอบ ให้เอฟเฟกต์เบา ๆ */
+.brand-logos-inline .brandbox:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(0,0,0,.12);
 }
 
 </style>
