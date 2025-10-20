@@ -112,15 +112,16 @@
     /* ===== Utility ===== */ 
     .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
   /* ===== Header / Brand Alignment ===== */
-header .container.nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 10px 20px;
-  flex-wrap: nowrap;   /* <-- แก้จาก wrap เป็น nowrap */
-  overflow-x: auto;    /* <-- เพิ่มบรรทัดนี้ */
+header .container.nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:10px 20px;
+  flex-wrap: nowrap;
+  overflow-x: visible;   /* ⬅️ เปลี่ยนจาก auto เป็น visible (หรือเอาบรรทัดนี้ออกเลย) */
 }
+
 .subtitle {
   margin: 0;
   white-space: nowrap;
@@ -189,17 +190,21 @@ header .brand span {
   align-items: center;
   justify-content: flex-end; /* ✅ ปุ่มชิดขวา */
   gap: 12px;
-  flex-wrap: nowrap;
-  flex: 1;                  /* ดันปุ่มไปทางขวาสุด */
+  flex: 1;
+  min-width: 0;              /* ✅ ป้องกันดันออกนอกกรอบ */
+  overflow: visible;         /* ✅ ไม่ต้องมีสกรอลล์ตรงนี้ */
 }
+
 .brand-logos-inline {
   display: flex;
   align-items: center;
   gap: 14px;
   flex-wrap: nowrap;
-  overflow-x: auto;       /* ✅ ให้เลื่อนแทนตกขอบ */
-  padding-bottom: 6px;    /* ✅ เพิ่มระยะกันขอบ scrollbar */
+  overflow-x: auto;      /* ✅ ให้เลื่อนเฉพาะตรงนี้ */
+  padding-bottom: 6px;   /* เว้นให้ scrollbar ไม่ชนขอบ */
+  max-width: 100%;
 }
+
 .brand-logos-inline .brandbox {
   width: 90px;            /* ✅ ขนาดเท่าที่คุณระบุ */
   height: 50px;
