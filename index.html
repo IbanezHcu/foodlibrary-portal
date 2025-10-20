@@ -116,9 +116,17 @@ header .container.nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
+  gap: 16px;
   padding: 10px 20px;
+  flex-wrap: nowrap;   /* <-- แก้จาก wrap เป็น nowrap */
+  overflow-x: auto;    /* <-- เพิ่มบรรทัดนี้ */
 }
+.subtitle {
+  margin: 0;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
 
 header .brand {
   display: flex;
