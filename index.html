@@ -21,7 +21,7 @@
     a{color:inherit;text-decoration:none}
     .container{max-width:1100px;margin:0 auto;padding:24px}
 
-    /* ===== Header / Nav (buttons right) ===== */
+    /* ===== Header / Nav ===== */
     header{
       position:sticky;top:0;z-index:40;
       backdrop-filter:saturate(180%) blur(8px);
@@ -53,50 +53,36 @@
     .btn--primary{background:#0bb66f;color:#fff;border-color:transparent;box-shadow:0 8px 26px rgba(11,182,111,.3)}
     .btn--primary:hover{filter:brightness(1.05)}
 
-    /* ===== Brand Bar (under header, no scrolling) ===== */
-    /* ===== Brand Bar (ใต้ header ปรับใหม่ ไม่ตกขอบ) ===== */
-/* ===== Brand Bar (เต็มความกว้าง + เว้นน้อยลง) ===== */
-.brandbar{
-  background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,0));
-  padding: 5px 0 0px;              /* ⬅ เว้นบน/ล่างให้น้อยลง */
-}
-.brandbar .container{
-  padding-left:16px;                  /* ⬅ ขอบซ้ายขวาพอดี */
-  padding-right:16px;
-}
-.brandgrid{
-  display:grid;
-  gap:12px;                           /* ⬅ ลดช่องว่างระหว่างกล่อง */
-  grid-template-columns: repeat(5, minmax(0,1fr)); /* 5 ช่องเท่ากันเต็มแถว */
-  align-items:center;
-}
-.brandcell{
-  width:100%;                         /* ⬅ ให้กินพื้นที่ช่องเต็ม ๆ */
-  height:76px;                        /* ⬅ สูงขึ้นเล็กน้อยให้ภาพ “เต็ม” มากขึ้น */
-  background:#fff;
-  border-radius:14px;
-  padding:6px 10px;                   /* ⬅ ขอบในบาง ๆ */
-  box-shadow:0 6px 18px rgba(0,0,0,.08);
-  display:grid;
-  place-items:center;
-  overflow:hidden;
-}
-.brandcell img{
-  width:60%;                         /* ⬅ ขยายเต็มกล่องตามอัตราส่วน */
-  height:100%;
-  object-fit:contain;                 /* ⬅ ไม่บิดรูป ไม่ล้นกรอบ */
-  display:block;
-}
+    /* ===== Brand Bar ===== */
+    .brandbar{
+      background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,0));
+      padding: 5px 0 0;
+    }
+    .brandbar .container{padding:0 16px;}
+    .brandgrid{
+      display:grid;
+      gap:12px;
+      grid-template-columns: repeat(5, minmax(0,1fr));
+      align-items:center;
+    }
+    .brandcell{
+      width:100%;height:76px;background:#fff;
+      border-radius:14px;padding:6px 10px;
+      box-shadow:0 6px 18px rgba(0,0,0,.08);
+      display:grid;place-items:center;overflow:hidden;
+    }
+    .brandcell img{
+      width:60%;height:100%;object-fit:contain;display:block;
+    }
+    @media (max-width:980px){
+      .brandgrid{grid-template-columns:repeat(3,minmax(0,1fr));}
+      .brandcell{height:70px;}
+    }
+    @media (max-width:640px){
+      .brandgrid{grid-template-columns:repeat(2,minmax(0,1fr));}
+      .brandcell{height:64px;}
+    }
 
-/* Responsive ปรับให้พอดีจอเล็ก */
-@media (max-width: 980px){
-  .brandgrid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
-  .brandcell{ height:70px; }
-}
-@media (max-width: 640px){
-  .brandgrid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
-  .brandcell{ height:64px; }
-}
     /* ===== Hero ===== */
     .hero{display:grid;grid-template-columns:1fr;gap:12px;padding:6px 0}
     .hero__card{
@@ -131,8 +117,30 @@
 
     /* ===== Utility ===== */
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+
+    /* ===== Fix Header Overlap on Mobile ===== */
+    @media (max-width:640px){
+      header .container.nav{
+        flex-wrap:wrap;
+        align-items:flex-start;
+        gap:8px;
+        padding:10px 16px;
+      }
+      .brand{flex:1 1 100%;gap:8px;}
+      .brand img{height:44px;border-radius:8px;}
+      .brand-title{font-size:18px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+      .subtitle{font-size:12px;line-height:1.2;margin-top:2px;}
+      .nav__actions{
+        width:100%;margin-top:4px;gap:8px;
+        justify-content:stretch;flex-wrap:wrap;
+      }
+      .nav__actions .btn{
+        flex:1 1 auto;min-width:140px;padding:10px 12px;
+      }
+    }
   </style>
 </head>
+
 <body>
   <a class="sr-only" href="#main">ข้ามไปยังเนื้อหา</a>
 
@@ -148,18 +156,17 @@
       </div>
 
       <div class="nav__actions">
-  <a class="btn" href="http://foodlibrary.co.th/phun-phung/index.html" target="_blank" rel="noopener" aria-label="ไปยังลิงก์ทั้งหมด">
-    แบรนด์ร้านอาหารในเครือ
-  </a>
-  <a class="btn btn--primary" href="https://www.wongnai.com/delivery/businesses/129476hx/order" target="_blank" rel="noopener"aria-label="ไปยังระบบ HR Automation">
-    Delivery 🛵
-  </a>
-</div>
-
+        <a class="btn" href="http://foodlibrary.co.th/phun-phung/index.html" target="_blank" rel="noopener" aria-label="ไปยังลิงก์ทั้งหมด">
+          แบรนด์ร้านอาหารในเครือ
+        </a>
+        <a class="btn btn--primary" href="https://www.wongnai.com/delivery/businesses/129476hx/order" target="_blank" rel="noopener" aria-label="ไปยังระบบ HR Automation">
+          Delivery 🛵
+        </a>
+      </div>
     </div>
   </header>
 
-  <!-- ===== Brand bar under header (no scroll) ===== -->
+  <!-- ===== Brand Bar ===== -->
   <section class="brandbar" aria-label="แบรนด์ในเครือ">
     <div class="container">
       <div class="brandgrid">
