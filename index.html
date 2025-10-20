@@ -144,6 +144,31 @@ header .brand span {
   font-weight: 700;
   font-size: 1.2rem;
 }
+/* ===== Brand Logo Showcase ===== */
+.brand-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin: 50px auto 30px;
+  max-width: 1000px;
+}
+
+.brand-logos img {
+  height: 120px;
+  width: auto;
+  border-radius: 12px;
+  background: white;
+  padding: 10px 20px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.brand-logos img:hover {
+  transform: scale(1.07);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
 
   </style>
 </head>
@@ -173,7 +198,14 @@ header .brand span {
 
     </div>
   </header>
-
+<!-- Brand Logos -->
+<div class="brand-logos">
+  <img src="images/plearnpoong.png" alt="เพลินพุง">
+  <img src="images/tamtam.png" alt="ตำตำ">
+  <img src="images/tymesdiner.png" alt="Tyme's Diner">
+  <img src="images/thesouth.png" alt="The South">
+  <img src="images/theartoffood.png" alt="The Art of Food">
+</div>
   <main id="main" class="container" role="main">
     <!-- Hero -->
     <section class="hero" aria-labelledby="hero-title">
