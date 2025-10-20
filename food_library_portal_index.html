@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#ff7a00" />
+  <meta name="description" content="FoodLibrary Portal — ศูนย์รวมลิงก์และระบบภายในองค์กร FoodLibrary" />
+  <title>FoodLibrary Portal</title>
+  <!-- Favicon (ใส่โลโก้ขององค์กรภายหลังได้) -->
+  <link rel="icon" href="images/favicon.png" />
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: #191919;
+      background: linear-gradient(135deg, #fff7f0 0%, #fff 40%, #f4fff6 100%);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== Layout ===== */
+    .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+
+    /* ===== Header / Nav ===== */
+    header {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: saturate(180%) blur(8px);
+      background: rgba(255, 255, 255, 0.7);
+      border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; padding: 12px 0;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand__logo {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: radial-gradient(100% 100% at 0% 0%, #ffb25c 0%, #ff7a00 60%, #ff5a00 100%);
+      display: grid; place-items: center; color: white; font-weight: 800;
+      box-shadow: 0 8px 30px rgba(255,122,0,.25);
+    }
+    .brand__text { line-height: 1.1; }
+    .brand__title { font-size: 18px; font-weight: 800; letter-spacing: .2px; }
+    .brand__subtitle { font-size: 12px; opacity: .7; }
+
+    .nav__actions { display: flex; gap: 10px; align-items: center; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px 14px; border-radius: 12px; border: 1px solid rgba(0,0,0,.06);
+      background: #fff; font-weight: 600; font-size: 14px; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,.04);
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(0,0,0,.06); }
+    .btn--primary { background: #0bb66f; color: #fff; border-color: transparent; box-shadow: 0 8px 26px rgba(11,182,111,.3); }
+    .btn--primary:hover { filter: brightness(1.04); }
+
+    /* ===== Hero Section ===== */
+    .hero {
+      display: grid; grid-template-columns: 1fr; gap: 20px;
+      padding: 42px 0 24px;
+    }
+    .hero__card {
+      border-radius: 20px;
+      padding: 28px; overflow: hidden; position: relative;
+      background: conic-gradient(from 200deg at 10% 20%, #fff 0deg, #fff0e6 80deg, #fff 160deg, #e8fff0 260deg, #fff 360deg);
+      border: 1px solid rgba(0,0,0,.06);
+      box-shadow: 0 16px 60px rgba(0,0,0,.06);
+    }
+    .hero__eyebrow { font-size: 12px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: #ff7a00; }
+    .hero__title { font-size: clamp(28px, 6vw, 48px); line-height: 1.05; margin: 6px 0 10px; font-weight: 900; }
+    .hero__desc { font-size: 16px; opacity: .78; max-width: 70ch; }
+    .hero__cta { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
+
+    /* Decorative Orbs */
+    .orb {
+      position: absolute; border-radius: 999px; filter: blur(20px); opacity: .35; pointer-events: none;
+    }
+    .orb--orange { width: 220px; height: 220px; background: #ff7a00; top: -40px; right: -40px; }
+    .orb--green  { width: 180px; height: 180px; background: #0bb66f; bottom: -40px; left: -40px; }
+
+    /* ===== Quick Links Grid ===== */
+    .section { margin: 22px 0 40px; }
+    .section__title { font-size: 18px; font-weight: 800; margin: 8px 0 14px; letter-spacing: .2px; }
+
+    .grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 980px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+    .card {
+      position: relative; border: 1px solid rgba(0,0,0,.06); border-radius: 16px; overflow: hidden; background: #fff;
+      padding: 18px; transition: transform .15s ease, box-shadow .15s ease;
+      box-shadow: 0 6px 20px rgba(0,0,0,.04);
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,.08); }
+    .card__title { font-weight: 800; font-size: 16px; margin-bottom: 6px; }
+    .card__desc  { font-size: 14px; opacity: .72; margin: 0; }
+    .chip {
+      display: inline-block; font-size: 11px; font-weight: 700; padding: 6px 10px; border-radius: 999px; letter-spacing: .04em;
+      background: #fff2e6; color: #a84d00; border: 1px solid #ffd9b2; margin-top: 10px;
+    }
+    .chip--ok   { background: #eafff3; color: #0a7a4c; border-color: #caffde; }
+
+    /* ===== Footer ===== */
+    footer { padding: 30px 0 50px; opacity: .7; font-size: 13px; }
+    .footer__row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+
+    /* ===== Utility ===== */
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+  </style>
+</head>
+<body>
+  <a class="sr-only" href="#main">ข้ามไปยังเนื้อหา</a>
+  <header role="banner">
+    <div class="container nav">
+      <div class="brand" aria-label="FoodLibrary">
+        <div class="brand__logo" aria-hidden="true">FL</div>
+        <div class="brand__text">
+          <div class="brand__title">FoodLibrary Portal</div>
+          <div class="brand__subtitle">ศูนย์รวมลิงก์และระบบภายในองค์กร</div>
+        </div>
+      </div>
+      <div class="nav__actions">
+        <a class="btn" href="#links" aria-label="ไปยังลิงก์ทั้งหมด">ลิงก์ทั้งหมด</a>
+        <a class="btn btn--primary" href="#hr" aria-label="ไปยังระบบ HR Automation">HR Automation</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="container" role="main">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__card">
+        <div class="orb orb--orange"></div>
+        <div class="orb orb--green"></div>
+        <div class="hero__eyebrow">Welcome</div>
+        <h1 id="hero-title" class="hero__title">ยินดีต้อนรับสู่ <span style="color:#ff7a00">FoodLibrary</span> Portal</h1>
+        <p class="hero__desc">หน้าหลักสำหรับพนักงานและผู้เกี่ยวข้อง เพื่อเข้าถึงระบบสำคัญขององค์กรได้อย่างรวดเร็ว — HR Automation, แบบฟอร์ม, เอกสารมาตรฐาน, และพื้นที่ทำงานร่วมกัน</p>
+        <div class="hero__cta">
+          <!-- TODO: ใส่ลิงก์จริงของระบบ HR (Google Apps Script Web App) -->
+          <a class="btn btn--primary" href="YOUR_HR_AUTOMATION_WEBAPP_URL" target="_blank" rel="noopener" aria-label="เปิด HR Automation">เข้า HR Automation</a>
+          <!-- TODO: ใส่ลิงก์โฟลเดอร์ Google Drive หลักขององค์กร -->
+          <a class="btn" href="YOUR_GOOGLE_DRIVE_URL" target="_blank" rel="noopener" aria-label="เปิด Google Drive">Google Drive</a>
+          <!-- TODO: ใส่ลิงก์ติดต่อแอดมิน: อีเมล, LINE OA, หรือฟอร์มแจ้งปัญหา -->
+          <a class="btn" href="YOUR_CONTACT_URL" target="_blank" rel="noopener" aria-label="ติดต่อผู้ดูแลระบบ">ติดต่อผู้ดูแล</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Links -->
+    <section id="links" class="section" aria-labelledby="section-links">
+      <h2 id="section-links" class="section__title">ลิงก์ด่วน</h2>
+      <div class="grid">
+        <a class="card" id="hr" href="YOUR_HR_AUTOMATION_WEBAPP_URL" target="_blank" rel="noopener" aria-label="เปิดระบบ HR Automation">
+          <div class="card__title">HR Automation</div>
+          <p class="card__desc">ส่งคำขอ, ออกเอกสาร, ติดตามสถานะ (รองรับ LINE/Email แจ้งเตือน)</p>
+          <span class="chip chip--ok">พร้อมใช้งาน</span>
+        </a>
+        <a class="card" href="YOUR_FORM_LEAVE_URL" target="_blank" rel="noopener" aria-label="เปิดฟอร์มลางาน">
+          <div class="card__title">ฟอร์มลางาน</div>
+          <p class="card__desc">ยื่นคำขอลางานออนไลน์ เชื่อมต่อ HR Automation อัตโนมัติ</p>
+          <span class="chip">Google Form</span>
+        </a>
+        <a class="card" href="YOUR_DOCS_TEMPLATE_URL" target="_blank" rel="noopener" aria-label="เปิดแม่แบบเอกสารมาตรฐาน">
+          <div class="card__title">แม่แบบเอกสาร</div>
+          <p class="card__desc">รวมไฟล์ Word/Docs สำหรับใช้งานภายใน (TH/EN)</p>
+          <span class="chip">Docs Library</span>
+        </a>
+        <a class="card" href="YOUR_GOOGLE_SHEET_DASHBOARD_URL" target="_blank" rel="noopener" aria-label="เปิดแดชบอร์ดสรุปงาน">
+          <div class="card__title">Dashboard</div>
+          <p class="card__desc">สรุปสถิติคำขอ, เอกสาร, และสถานะการอนุมัติ</p>
+          <span class="chip">Sheets</span>
+        </a>
+        <a class="card" href="YOUR_INTERNAL_TOOLS_URL" target="_blank" rel="noopener" aria-label="เปิดเครื่องมือภายในองค์กร">
+          <div class="card__title">Internal Tools</div>
+          <p class="card__desc">รวมลิงก์เครื่องมือทำงาน เช่น POS, Inventory, Attendance</p>
+          <span class="chip">Tools</span>
+        </a>
+        <a class="card" href="YOUR_CONTACT_URL" target="_blank" rel="noopener" aria-label="เปิดช่องทางติดต่อผู้ดูแลระบบ">
+          <div class="card__title">ติดต่อผู้ดูแล</div>
+          <p class="card__desc">แจ้งปัญหา ขอสิทธิ์เข้าถึง หรือติดต่อแอดมิน</p>
+          <span class="chip">Helpdesk</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Notes -->
+    <section class="section" aria-labelledby="section-notes">
+      <h2 id="section-notes" class="section__title">หมายเหตุ</h2>
+      <div class="card" role="note" aria-label="หมายเหตุสำคัญ">
+        <p class="card__desc">
+          โปรดบันทึกหน้านี้เป็นบุ๊คมาร์ก หากคุณไม่มีสิทธิ์เข้าถึงบางระบบ กรุณาใช้ปุ่ม “ติดต่อผู้ดูแล” เพื่อขอสิทธิ์เพิ่มเติม
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container" role="contentinfo">
+    <div class="footer__row">
+      <div>© <span id="year"></span> FoodLibrary — All rights reserved.</div>
+      <div>เวอร์ชันหน้าเว็บ: <strong>Portal C-1.0</strong></div>
+    </div>
+  </footer>
+
+  <script>
+    // ใส่ปีอัตโนมัติใน Footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ตัวอย่าง: กรณีอยากใช้พารามิเตอร์จาก URL เพื่อโชว์แบนเนอร์แจ้งเตือน
+    // ?notice=maintenance
+    (function(){
+      const params = new URLSearchParams(location.search);
+      if(params.get('notice') === 'maintenance'){
+        const bar = document.createElement('div');
+        bar.setAttribute('role','status');
+        bar.style.cssText = 'position:fixed;inset:auto 0 0 0;background:#191919;color:#fff;padding:10px 16px;text-align:center;font-weight:700;z-index:60;';
+        bar.textContent = 'ประกาศ: ระบบอยู่ระหว่างบำรุงรักษาชั่วคราว';
+        document.body.appendChild(bar);
+      }
+    })();
+  </script>
+
+  <!--
+    TODO หลังออนไลน์แล้ว:
+    1) แทนที่ YOUR_* เป็นลิงก์จริงขององค์กร
+    2) อัปโลโก้ที่ images/favicon.png และปรับชื่อแบรนด์ใน header
+    3) (ตัวเลือก) เพิ่มหน้า /blog แยกใน WordPress แล้วลิงก์จาก Portal
+    4) (ตัวเลือก) ติดตั้ง Analytics ตามนโยบายความเป็นส่วนตัวขององค์กร
+  -->
+</body>
+</html>
