@@ -109,22 +109,54 @@
     footer { padding: 30px 0 50px; opacity: .7; font-size: 13px; }
     .footer__row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
 
-    /* ===== Utility ===== */
+    /* ===== Utility ===== */ 
     .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+  /* ===== Header / Brand Alignment ===== */
+header .container.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 10px 20px;
+}
+
+header .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;  /* ระยะห่างระหว่างโลโก้กับข้อความ */
+}
+
+header .brand img {
+  height: 48px;        /* ขนาดโลโก้ ปรับได้ 40–60 ตามเหมาะสม */
+  width: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(255, 122, 0, 0.25);
+  transition: transform 0.3s ease;
+}
+
+header .brand img:hover {
+  transform: scale(1.05); /* ขยายเล็กน้อยตอนเอาเมาส์ชี้ */
+}
+
+header .brand span {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
   </style>
 </head>
 <body>
   <a class="sr-only" href="#main">ข้ามไปยังเนื้อหา</a>
   <header role="banner">
     <div class="container nav">
-      <div class="brand" aria-label="FoodLibrary">
-        <div class="brand__logo" aria-hidden="true">FL</div>
-        <div class="brand__text">
-          <div class="brand__title">FoodLibrary Center </div>
-          <div class="brand__subtitle">ศูนย์รวมลิงก์และระบบภายในองค์กร 🍜🍗🍛🍹 </div>
-        </div>
-      </div>
-      <div class="nav__actions">
+      --*
+      <div class="brand">
+  <img src="images/logo.png" alt="FoodLibrary Logo" style="height:40px; vertical-align:middle; margin-right:8px;">
+  <span>FoodLibrary Center</span>
+</div>
+<p class="subtitle">ศูนย์รวมลิงก์และระบบภายในองค์กร 🍜🍱🍹🍰</p>
+ --*
+   <div class="nav__actions">
         <a class="btn" href="#links" aria-label="ไปยังลิงก์ทั้งหมด">ลิงก์ทั้งหมด</a>
         <a class="btn btn--primary" href="#hr" aria-label="ไปยังระบบ HR Automation">HR Automation</a>
       </div>
