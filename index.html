@@ -111,6 +111,47 @@
     .chip{display:inline-block;font-size:11px;font-weight:700;padding:6px 10px;border-radius:999px;letter-spacing:.04em;background:#fff2e6;color:#a84d00;border:1px solid #ffd9b2;margin-top:10px}
     .chip--ok{background:#eafff3;color:#0a7a4c;border-color:#caffde}
 
+    /* ===== HR Forms List Section ===== */
+    .card.card--list { padding: 18px 18px 14px; }
+    .card--list .list-title {
+      font-weight: 800;
+      font-size: 16px;
+      margin: 0 0 10px;
+    }
+    .card--list .list-desc {
+      font-size: 14px;
+      opacity: .72;
+      margin: 0 0 10px;
+    }
+    .card--list .list-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+    .card--list .list-links a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #efefef;
+      background: #fff;
+      color: #0f62fe;
+      transition: background .15s ease, transform .05s ease, border-color .15s ease;
+      font-size: .98rem;
+      line-height: 1.5;
+      text-decoration: none;
+    }
+    .card--list .list-links a:hover { background: #f5f8ff; }
+    .card--list .list-links a:active { transform: scale(.996); }
+    .card--list .list-links a.is-empty {
+      color: #6b7280;
+      background: #fcfcfc;
+      border-color: #f0f0f0;
+      cursor: default;
+    }
+    .card--list .list-links a.is-empty:hover { background: #fcfcfc; }
+
     /* ===== Footer ===== */
     footer{padding:30px 0 50px;opacity:.7;font-size:13px}
     .footer__row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
@@ -156,113 +197,84 @@
       </div>
 
       <div class="nav__actions">
-        <a class="btn" href="http://foodlibrary.co.th/phun-phung/index.html" target="_blank" rel="noopener" aria-label="ไปยังลิงก์ทั้งหมด">
-          แบรนด์ร้านอาหารในเครือ
-        </a>
-        <a class="btn btn--primary" href="https://www.wongnai.com/delivery/businesses/129476hx/order" target="_blank" rel="noopener" aria-label="ไปยังระบบ HR Automation">
-          Delivery 🛵
-        </a>
+        <a class="btn" href="http://foodlibrary.co.th/phun-phung/index.html" target="_blank" rel="noopener">แบรนด์ร้านอาหารในเครือ</a>
+        <a class="btn btn--primary" href="https://www.wongnai.com/delivery/businesses/129476hx/order" target="_blank" rel="noopener">Delivery 🛵</a>
       </div>
     </div>
   </header>
 
   <!-- ===== Brand Bar ===== -->
-  <section class="brandbar" aria-label="แบรนด์ในเครือ">
+  <section class="brandbar">
     <div class="container">
       <div class="brandgrid">
-        <div class="brandcell"><img src="images/brand1.png" alt="เพลินพุง" loading="lazy"></div>
-        <div class="brandcell"><img src="images/brand2.png" alt="ตำตำ" loading="lazy"></div>
-        <div class="brandcell"><img src="images/brand3.png" alt="Tyme's Diner" loading="lazy"></div>
-        <div class="brandcell"><img src="images/brand4.png" alt="The South" loading="lazy"></div>
-        <div class="brandcell"><img src="images/brand5.png" alt="The Art of Food" loading="lazy"></div>
+        <div class="brandcell"><img src="images/brand1.png" alt="เพลินพุง"></div>
+        <div class="brandcell"><img src="images/brand2.png" alt="ตำตำ"></div>
+        <div class="brandcell"><img src="images/brand3.png" alt="Tyme's Diner"></div>
+        <div class="brandcell"><img src="images/brand4.png" alt="The South"></div>
+        <div class="brandcell"><img src="images/brand5.png" alt="The Art of Food"></div>
       </div>
     </div>
   </section>
 
   <!-- ===== Main ===== -->
-  <main id="main" class="container" role="main">
-    <section class="hero" aria-labelledby="hero-title">
+  <main id="main" class="container">
+    <section class="hero">
       <div class="hero__card">
         <div class="orb orb--orange"></div>
         <div class="orb orb--green"></div>
         <div class="hero__eyebrow">Welcome</div>
-        <h1 id="hero-title" class="hero__title">
-          ยินดีต้อนรับสู่ <span style="color:#FFD700;text-shadow:1px 1px 3px rgba(0,0,0,.25)">FoodLibrary</span> Center
-        </h1>
-        <p class="hero__desc">
-          หน้าหลักสำหรับพนักงานและผู้เกี่ยวข้อง เพื่อเข้าถึงระบบสำคัญขององค์กรได้อย่างรวดเร็ว - แบบฟอร์ม, เอกสารมาตรฐาน, และพื้นที่ทำงานร่วมกัน
-        </p>
+        <h1 class="hero__title">ยินดีต้อนรับสู่ <span style="color:#FFD700;text-shadow:1px 1px 3px rgba(0,0,0,.25)">FoodLibrary</span> Center</h1>
+        <p class="hero__desc">หน้าหลักสำหรับพนักงานและผู้เกี่ยวข้อง เพื่อเข้าถึงระบบสำคัญขององค์กรได้อย่างรวดเร็ว - แบบฟอร์ม, เอกสารมาตรฐาน, และพื้นที่ทำงานร่วมกัน</p>
         <div class="hero__cta">
-          <a class="btn btn--primary" href="http://foodlibrary.co.th/" target="_blank" rel="noopener">เว็บไซต์ Foodlibrary.co.th</a>
+          <a class="btn btn--primary" href="http://foodlibrary.co.th/" target="_blank" rel="noopener">เว็บไซต์ FoodLibrary.co.th</a>
           <a class="btn" href="https://drive.google.com/drive/u/2/home" target="_blank" rel="noopener">Google Drive</a>
           <a class="btn" href="http://foodlibrary.co.th/the-south/index.html" target="_blank" rel="noopener">ติดต่อผู้ดูแล</a>
         </div>
       </div>
     </section>
 
-    <section id="links" class="section" aria-labelledby="section-links">
-      <h2 id="section-links" class="section__title">Back office</h2>
+    <!-- ===== Updated Links Section ===== -->
+    <section id="links" class="section">
+      <h2 class="section__title">Back office</h2>
       <div class="grid">
-        <a class="card" id="hr" href="https://docs.google.com/forms/d/e/1FAIpQLSd4gGUoKPXBo-CHNLwCEo352g_dA8SuZr3RhcZswoQYqy1USg/viewform?usp=header" target="_blank" rel="noopener">
-          <div class="card__title">แผนก HR</div>
-          <p class="card__desc">ส่งคำขอ, ออกเอกสาร, ติดตามสถานะ (รองรับ LINE/Email แจ้งเตือน)</p>
-          <span class="chip chip--ok">พร้อมใช้งาน</span>
-        </a>
-        <a class="card" href="https://docs.google.com/forms/d/e/1FAIpQLSd4gGUoKPXBo-CHNLwCEo352g_dA8SuZr3RhcZswoQYqy1USg/viewform?usp=header" target="_blank" rel="noopener">
-          <div class="card__title">ฟอร์มลางาน</div>
-          <p class="card__desc">ยื่นคำขอลางานออนไลน์ เชื่อมต่อ HR Automation อัตโนมัติ</p>
-          <span class="chip">Google Form</span>
-        </a>
+
+        <!-- การ์ด: แผนก HR -->
+        <div class="card card--list" id="hr">
+          <div class="list-title">แผนก HR</div>
+          <p class="list-desc">รวมลิงก์ฟอร์ม HR หลัก 4 รายการ — ตัวหนังสือล้วน อ่านง่าย ดูสบายตา</p>
+          <ul class="list-links">
+            <li><a href="#" title="แบบฟอร์มใบสมัครงาน">1) แบบฟอร์มใบสมัครงาน</a></li>
+            <li><a href="#" title="แบบฟอร์มหนังสือรับรอง">2) แบบฟอร์มหนังสือรับรอง</a></li>
+            <li><a href="#" title="แบบฟอร์มสวัสดิการ">3) แบบฟอร์มสวัสดิการ</a></li>
+            <li><a href="#" title="แบบฟอร์มใบลา">4) แบบฟอร์มใบลา</a></li>
+          </ul>
+        </div>
+
+        <!-- การ์ด: หัวข้ออื่น ๆ 1 -->
+        <div class="card card--list">
+          <div class="list-title">หัวข้ออื่น ๆ 1</div>
+          <p class="list-desc">ลิงก์ว่างสำหรับเพิ่มฟอร์มในอนาคต (4 รายการ)</p>
+          <ul class="list-links">
+            <li><a class="is-empty" href="javascript:void(0)">1) แบบฟอร์ม</a></li>
+            <li><a class="is-empty" href="javascript:void(0)">2) แบบฟอร์ม</a></li>
+            <li><a class="is-empty" href="javascript:void(0)">3) แบบฟอร์ม</a></li>
+            <li><a class="is-empty" href="javascript:void(0)">4) แบบฟอร์ม</a></li>
+          </ul>
+        </div>
+
+        <!-- การ์ดอื่นคงเดิม -->
         <a class="card" href="https://docs.google.com/forms/d/e/1FAIpQLSdIXRXYWudxfF4c9yNkuaiIK5m7oracosAtb-3D-1GueE6dZg/viewform" target="_blank" rel="noopener">
-          <div class="card__title">แบบฟอร์ม สั่งของครัวกลาง</div>
+          <div class="card__title">แบบฟอร์มสั่งของครัวกลาง</div>
           <p class="card__desc">รวมไฟล์ Word/Docs สำหรับใช้งานภายใน (TH/EN)</p>
           <span class="chip">Docs Library</span>
         </a>
+
         <a class="card" href="#" target="_blank" rel="noopener">
           <div class="card__title">แผนกบัญชี</div>
           <p class="card__desc">สรุปสถิติคำขอ, เอกสาร, และสถานะการอนุมัติ</p>
           <span class="chip">Sheets</span>
         </a>
+
         <a class="card" href="https://docs.google.com/spreadsheets/d/13nYeQMd9Si-EUP8cVW1klk2g0Jr57n12ZjD8C_Hdno4/edit?gid=2031573445#gid=2031573445" target="_blank" rel="noopener">
           <div class="card__title">แจ้งงานซ่อม IT & Maintenance</div>
-          <p class="card__desc">รวมลิงก์เครื่องมือทำงาน เช่น POS, Inventory, Attendance</p>
-          <span class="chip">Tools</span>
-        </a>
-        <a class="card" href="YOUR_CONTACT_URL" target="_blank" rel="noopener">
-          <div class="card__title">ติดต่อผู้ดูแล</div>
-          <p class="card__desc">แจ้งปัญหา ขอสิทธิ์เข้าถึง หรือติดต่อแอดมิน</p>
-          <span class="chip">Helpdesk</span>
-        </a>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="section-notes">
-      <h2 id="section-notes" class="section__title">หมายเหตุ</h2>
-      <div class="card" role="note">
-        <p class="card__desc">หากพบปัญหาการใช้งานกรุณา “ติดต่อผู้ดูแล” เพื่อขอสิทธิ์เพิ่มเติม</p>
-      </div>
-    </section>
-  </main>
-
-  <footer class="container" role="contentinfo">
-    <div class="footer__row">
-      <div>© <span id="year"></span> FoodLibrary — All rights reserved.</div>
-      <div>เวอร์ชันหน้าเว็บ: <strong>Portal C-1.0</strong></div>
-    </div>
-  </footer>
-
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    (function(){
-      const p = new URLSearchParams(location.search);
-      if(p.get('notice')==='maintenance'){
-        const bar=document.createElement('div');
-        bar.setAttribute('role','status');
-        bar.style.cssText='position:fixed;inset:auto 0 0 0;background:#191919;color:#fff;padding:10px 16px;text-align:center;font-weight:700;z-index:60;';
-        bar.textContent='ประกาศ: ระบบอยู่ระหว่างบำรุงรักษาชั่วคราว';
-        document.body.appendChild(bar);
-      }
-    })();
-  </script>
-</body>
-</html>
+          <p class="card__desc">รวมลิงก์เครื่องมือทำงาน เช่น POS, Inventory, Attendance
