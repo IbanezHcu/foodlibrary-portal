@@ -1,259 +1,154 @@
-/***********************************************************
- * FoodLibrary — RSC Order Automation (TH) v2.7
- * โค้ดไฟล์เดียว “พร้อมรัน”
- * - โฟลเดอร์ปลายทาง: FoodLibrary RSC Output/{DOC,PDF,Excel}
- * - ตั้งชื่อไฟล์: <BRANCH>-<dd-MM-yyyy>
- * - วันที่หัวเอกสาร: dd/MM/yy
- ***********************************************************/
+<!-- ================= Back office ================= -->
+<section id="backoffice" class="backoffice">
+  <h2 class="bo-title">Back office</h2>
 
-/** ===================== CONFIG ======================= **/
-const CFG = {
-  // ชื่อแท็บข้อมูล
-  sheetNameForm: 'Form_Responses2',    // แท็บรับคำตอบจาก Google Form
-  sheetNameMain: 'ตารางหลัก',          // แท็บตารางหลัก 8 รายการตายตัว
+  <div class="bo-grid">
+    <!-- ========== แผนก HR (แม่แบบ) ========== -->
+    <section class="panel">
+      <header class="panel-head">
+        <h3>แผนก HR</h3>
+        <p>รวมลิงก์ฟอร์ม HR หลัก 4 รายการ — ตัวหนังสืออ่านง่าย ดูสบายตา</p>
+      </header>
+      <div class="panel-body">
+        <nav class="link-list">
+          <a class="list-link" href="#" target="_blank">1) แบบฟอร์มใบสมัครงาน</a>
+          <a class="list-link" href="#" target="_blank">2) แบบฟอร์มหนังสือรับรอง</a>
+          <a class="list-link" href="#" target="_blank">3) แบบฟอร์มสวัสดิการ</a>
+          <a class="list-link" href="#" target="_blank">4) แบบฟอร์มใบลา</a>
+        </nav>
+      </div>
+    </section>
 
-  // ชื่อ/ที่ตั้งผลลัพธ์บน Google Drive
-  outputRootName: 'FoodLibrary RSC Output', // โฟลเดอร์รูท
-  subFolders: { DOC: 'DOC', PDF: 'PDF', XLSX: 'Excel' },
+    <!-- ========== แผนกบัญชี ========== -->
+    <section class="panel">
+      <header class="panel-head">
+        <h3>แผนกบัญชี</h3>
+        <p>สรุปสถิติคำขอ, เอกสาร, และสถานะการอนุมัติ</p>
+      </header>
+      <div class="panel-body">
+        <nav class="link-list">
+          <a class="list-link" href="#" target="_blank">1) รายงานสรุปยอด (Sheets)</a>
+          <a class="list-link" href="#" target="_blank">2) ภาษี/ใบกำกับภาษี</a>
+          <a class="list-link" href="#" target="_blank">3) เบิกค่าใช้จ่าย</a>
+          <a class="list-link" href="#" target="_blank">4) แบบฟอร์มอื่น ๆ</a>
+        </nav>
+      </div>
+    </section>
 
-  // คอลัมน์ใน Form_Responses2 (แก้ให้ตรงฟอร์มจริงของคุณ)
-  colTimestamp: 'A',
-  colBranch:    'B', // ชื่อร้าน/สาขา
-  // ตัวอย่าง Q1..Q8 อยู่คอลัมน์ C..J
-  firstItemCol: 'C',
-  itemCount: 8,
+    <!-- ========== IT & Maintenance ========== -->
+    <section class="panel">
+      <header class="panel-head">
+        <h3>แจ้งงานซ่อม IT &amp; Maintenance</h3>
+        <p>รวมลิงก์เครื่องมือทำงาน เช่น POS, Inventory, Attendance</p>
+      </header>
+      <div class="panel-body">
+        <nav class="link-list">
+          <a class="list-link" href="#" target="_blank">1) แจ้งซ่อมอุปกรณ์/ระบบ</a>
+          <a class="list-link" href="#" target="_blank">2) สถานะงานซ่อม</a>
+          <a class="list-link" href="#" target="_blank">3) คู่มือ/วิธีใช้งาน</a>
+          <a class="list-link" href="#" target="_blank">4) แบบฟอร์มอื่น ๆ</a>
+        </nav>
+      </div>
+    </section>
 
-  // สินค้าตายตัว 8 รายการ (แสดงในตาราง/เอกสารเรียงตามลำดับ)
-  fixedItems: [
-    'ซอสส้มเจ 500 กรัม',
-    'น้ำส้มตำไทยเจ 1000 กรัม',
-    'น้ำยำเจ 500 กรัม',
-    'ซอสผัดเจ 500 กรัม',
-    'ปอเปี๊ยะทอดเจ',
-    'ซอสพริกเจ',
-    'น้ำจิ้มไก่เจ',
-    'เต้าหู้เจ'
-  ],
+    <!-- ========== แบบฟอร์มสั่งของครัวกลาง ========== -->
+    <section class="panel">
+      <header class="panel-head">
+        <h3>แบบฟอร์มสั่งของครัวกลาง</h3>
+        <p>รวมไฟล์ Word/Docs สำหรับใช้งานภายใน (TH/EN)</p>
+      </header>
+      <div class="panel-body">
+        <nav class="link-list">
+          <a class="list-link badge" href="#" target="_blank">Docs Library</a>
+          <!-- ถ้าต้องการเพิ่มรายการย่อย สามารถเพิ่มลิงก์ด้านล่างนี้ -->
+          <!-- <a class="list-link" href="#" target="_blank">รายการเอกสารตัวอย่าง</a> -->
+        </nav>
+      </div>
+    </section>
 
-  // เทมเพลตสไตล์เอกสาร
-  doc: {
-    titlePrefix: 'ใบสั่งวัตถุดิบ — ',
-    headerDatePrefix: 'วันที่: ',
-    headerBranchPrefix: 'ร้าน/สาขา: ',
-    font: 'TH Sarabun New', // ใช้ฟอนต์ไทยมาตรฐานใน Docs
-    fontSize: 14
+    <!-- ========== หัวข้ออื่น ๆ 1 ========== -->
+    <section class="panel">
+      <header class="panel-head">
+        <h3>หัวข้ออื่น ๆ 1</h3>
+        <p>ลิงก์ว่างสำหรับเพิ่มฟอร์มในอนาคต (4 รายการ)</p>
+      </header>
+      <div class="panel-body">
+        <nav class="link-list">
+          <a class="list-link" href="#" target="_blank">1) แบบฟอร์ม</a>
+          <a class="list-link" href="#" target="_blank">2) แบบฟอร์ม</a>
+          <a class="list-link" href="#" target="_blank">3) แบบฟอร์ม</a>
+          <a class="list-link" href="#" target="_blank">4) แบบฟอร์ม</a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- ========== คุณสามารถคัดลอก panel ทั้งบล็อกนี้ไปทำแผนกใหม่ ๆ ได้เลย ========== -->
+  </div>
+</section>
+
+<!-- ============== CSS (เพิ่มต่อท้ายไฟล์ หรือรวมกับสไตล์เดิมได้) ============== -->
+<style>
+  /* โครง Back office */
+  .backoffice { padding: 24px 16px 56px; }
+  .bo-title { font-size: 28px; margin: 0 0 16px; }
+
+  .bo-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
   }
-};
+  /* ปรับคอลัมน์ให้ยืดหยุ่น: desktop=4คอลฯ, tablet=6คอลฯ, mobile=12คอลฯ */
+  .panel { grid-column: span 4; }
+  @media (max-width: 1024px) { .panel { grid-column: span 6; } }
+  @media (max-width: 640px)  { .panel { grid-column: span 12; } }
 
-/** =============== Utilities / Helpers =============== **/
-const A1 = (col, row) => `${col}${row}`;
-
-// dd/MM/yy (head)  &  dd-MM-yyyy (filename)
-function formatDateThaiHead(d) {
-  return Utilities.formatDate(d, Session.getScriptTimeZone(), 'dd/MM/yy');
-}
-function formatDateFilename(d) {
-  return Utilities.formatDate(d, Session.getScriptTimeZone(), 'dd-MM-yyyy');
-}
-
-// ค้นหา/สร้างโฟลเดอร์รูท + ย่อย
-function ensureOutputFolders_() {
-  const drive = DriveApp;
-  // Root
-  let rootItr = drive.getFoldersByName(CFG.outputRootName);
-  let root = rootItr.hasNext() ? rootItr.next() : drive.createFolder(CFG.outputRootName);
-  // Children
-  const out = { rootId: root.getId(), DOC: null, PDF: null, XLSX: null };
-  Object.entries(CFG.subFolders).forEach(([key, name]) => {
-    let it = root.getFoldersByName(name);
-    let f = it.hasNext() ? it.next() : root.createFolder(name);
-    out[key] = f.getId();
-  });
-  return out;
-}
-
-// อ่านแถวล่าสุดจาก Form_Responses2
-function readLastFormRow_() {
-  const ss = SpreadsheetApp.getActive();
-  const sh = ss.getSheetByName(CFG.sheetNameForm);
-  if (!sh) throw new Error('ไม่พบแท็บ: ' + CFG.sheetNameForm);
-
-  const last = sh.getLastRow();
-  if (last < 2) throw new Error('ยังไม่มีคำตอบฟอร์ม');
-
-  const rng = sh.getRange(1, 1, last, sh.getLastColumn()); // ทั้งตาราง
-  const values = rng.getValues();
-
-  const header = values[0];
-  const row = values[last - 1];
-  const map = {};
-  header.forEach((h, i) => (map[h] = row[i]));
-  return { header, row, map };
-}
-
-// อัปเดต "ตารางหลัก" (8 รายการตายตัว) จากคำตอบล่าสุด
-function updateMainTableFromLast_() {
-  const ss = SpreadsheetApp.getActive();
-  const sh = ss.getSheetByName(CFG.sheetNameMain) || ss.insertSheet(CFG.sheetNameMain);
-
-  // ล้าง/ตั้งหัว
-  sh.clear({ contentsOnly: true });
-  sh.getRange('A1:F1').setValues([['ลำดับ', 'รายการ', 'หน่วย', 'จำนวนที่ขอ', 'หมายเหตุ', 'สถานะ']]).setFontWeight('bold');
-
-  const last = readLastFormRow_();
-  const qtyStartColIdx = 3; // C = 3 (Timestamp=A1, Branch=B2 สมมติ)
-
-  const rows = [];
-  for (let i = 0; i < CFG.itemCount; i++) {
-    const itemName = CFG.fixedItems[i] || `รายการที่ ${i + 1}`;
-    // ปล่อยให้หน่วยว่างไว้ หรือจะใส่คำว่า 'หน่วย' ตามจริงก็ได้
-    const unit = ''; 
-    const qty = last.row[qtyStartColIdx - 1 + i] || ''; // ปริมาณจาก Q1..Q8
-    rows.push([i + 1, itemName, unit, qty, '', '']);
+  /* การ์ดแผนกแบบเดียวกับ HR */
+  .panel {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.06);
+    border: 1px solid rgba(0,0,0,.06);
+    overflow: hidden;
   }
-  sh.getRange(2, 1, rows.length, 6).setValues(rows);
-  sh.autoResizeColumns(1, 6);
-  return { branch: last.row[2 - 1], timestamp: new Date(last.row[1 - 1]) }; // B,A
-}
+  .panel-head { padding: 18px 18px 0; }
+  .panel-head h3 {
+    margin: 0 0 6px;
+    font-size: 20px;
+  }
+  .panel-head p {
+    margin: 0 0 14px;
+    color: #5b5b5b;
+    font-size: 14px;
+  }
+  .panel-body { padding: 0 18px 18px; }
 
-/** =============== Document Builder =============== **/
-function buildDocAndPdf_(meta, folders) {
-  const { branch, timestamp } = meta;
-  const ss = SpreadsheetApp.getActive();
-  const sh = ss.getSheetByName(CFG.sheetNameMain);
-  if (!sh) throw new Error('ไม่พบแท็บตารางหลัก');
-
-  // อ่านข้อมูลแถวรายการ
-  const lastRow = sh.getLastRow();
-  if (lastRow < 2) throw new Error('ตารางหลักไม่มีข้อมูลรายการ');
-  const data = sh.getRange(2, 1, lastRow - 1, 6).getValues();
-
-  // เตรียมชื่อไฟล์
-  const dateStrFile = formatDateFilename(timestamp || new Date()); // dd-MM-yyyy
-  const safeBranch = (branch || 'ไม่ระบุสาขา').toString().trim();
-  const baseName = `${safeBranch}-${dateStrFile}`;
-
-  // สร้างเอกสาร
-  const doc = DocumentApp.create(`${CFG.doc.titlePrefix}${baseName}`);
-  const body = doc.getBody();
-  body.setAttributes({ FONT_FAMILY: CFG.doc.font, FONT_SIZE: CFG.doc.fontSize });
-
-  // หัวเรื่อง
-  const title = body.appendParagraph('ใบสั่งวัตถุดิบ (RSC)');
-  title.setHeading(DocumentApp.ParagraphHeading.HEADING2).setAlignment(DocumentApp.HorizontalAlignment.CENTER);
-
-  // ข้อมูลหัวเอกสาร
-  const dateStrHead = formatDateThaiHead(timestamp || new Date()); // dd/MM/yy
-  body.appendParagraph(`${CFG.doc.headerBranchPrefix}${safeBranch}`).setSpacingAfter(4);
-  body.appendParagraph(`${CFG.doc.headerDatePrefix}${dateStrHead}`).setSpacingAfter(12);
-
-  // ตาราง 8 รายการ
-  const table = body.appendTable();
-  table.setBorderWidth(0.5);
-  // หัวตาราง
-  const header = table.appendTableRow();
-  ['ลำดับ', 'รายการ', 'หน่วย', 'จำนวนที่ขอ', 'หมายเหตุ', 'สถานะ'].forEach((h, i) => {
-    const cell = header.appendTableCell(h);
-    cell.setBackgroundColor('#FFF3CD'); // เหลืองอ่อน
-    cell.setBold(true);
-  });
-  // แถวข้อมูล
-  data.forEach(row => {
-    const tr = table.appendTableRow();
-    row.forEach(v => tr.appendTableCell(v === null ? '' : String(v)));
-  });
-
-  // ปรับความกว้างคร่าว ๆ
-  const widths = [40, 220, 60, 80, 120, 80]; // px โดยประมาณ
-  const tRows = table.getNumRows();
-  for (let r = 0; r < tRows; r++) {
-    const tr = table.getRow(r);
-    const cells = tr.getNumCells();
-    for (let c = 0; c < cells; c++) {
-      tr.getCell(c).setPaddingTop(2).setPaddingBottom(2).setPaddingLeft(4).setPaddingRight(4);
-      // Docs ไม่มี API ตั้งความกว้างคอลัมน์ตรง ๆ แต่ padding/เนื้อหา + export ช่วยจัดให้พอดี
-    }
+  /* รายการลิงก์แบบปุ่มยาว */
+  .link-list { display: grid; gap: 10px; }
+  .list-link {
+    display: block;
+    text-decoration: none;
+    border: 1px solid rgba(0,0,0,.08);
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: #f9fafb;
+    font-size: 15px;
+    color: #1a1a1a;
+    transition: transform .05s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .list-link:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0,0,0,.06);
+    background: #ffffff;
   }
 
-  body.appendParagraph('').setSpacingAfter(6);
-
-  // ลายเซ็น (เส้นยาวเท่ากัน)
-  // เทคนิค: ใช้ตาราง 1x2 แล้วใส่ข้อความ + ขีดล่างด้วย underline ของ space ความยาวเท่ากัน
-  const signTbl = body.appendTable([['', '']]);
-  signTbl.setBorderWidth(0);
-  const left = signTbl.getRow(0).getCell(0);
-  const right = signTbl.getRow(0).getCell(1);
-
-  function signatureBlock(cell, title) {
-    const p1 = cell.appendParagraph(title);
-    p1.setSpacingAfter(4);
-    // สร้างบรรทัดลายเซ็นด้วย underline ความยาวคงที่
-    const lineLen = 36; // ปรับความยาวเส้นให้เท่ากันทั้งสองฝั่ง
-    const underline = new Array(lineLen).fill(' ').join('');
-    const p2 = cell.appendParagraph(underline);
-    p2.setUnderline(true);
-    p2.setSpacingAfter(6);
+  /* ปุ่ม badge (เช่น Docs Library) */
+  .badge {
+    display: inline-block;
+    width: max-content;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: #ffe9d7;
+    border: 1px solid #ffd2ad;
+    font-weight: 600;
   }
-  signatureBlock(left,  'ผู้สั่งของ');
-  signatureBlock(right, 'ผู้รับของ');
-
-  // หมายเหตุ: เว้นที่
-  body.appendParagraph('หมายเหตุ: ').setSpacingBefore(6);
-
-  doc.saveAndClose();
-
-  // ย้ายเอกสารไปโฟลเดอร์ DOC
-  const docFile = DriveApp.getFileById(doc.getId());
-  DriveApp.getFolderById(folders.DOC).addFile(docFile);
-  // เอาออกจาก My Drive root (ให้เหลือเฉพาะใน DOC)
-  DriveApp.getRootFolder().removeFile(docFile);
-
-  // Export PDF
-  const blob = docFile.getAs(MimeType.PDF).setName(`${baseName}.pdf`);
-  DriveApp.getFolderById(folders.PDF).createFile(blob);
-
-  return { docId: doc.getId(), nameBase: baseName };
-}
-
-// Export ชีต "ตารางหลัก" เป็น Excel (.xlsx) ลงโฟลเดอร์ Excel
-function exportMainAsExcel_(folders, baseName) {
-  const ss = SpreadsheetApp.getActive();
-  const xlsxBlob = Utilities.newBlob('', MimeType.ZIP, 'tmp'); // placeholder
-  // วิธีง่ายสุด: คัดลอกไฟล์ทั้งสเปรดชีตเป็น xlsx แล้วตั้งชื่อ
-  const file = DriveApp.getFileById(ss.getId());
-  const url = 'https://docs.google.com/feeds/download/spreadsheets/Export?key=' + ss.getId() + '&exportFormat=xlsx';
-  const token = ScriptApp.getOAuthToken();
-  const response = UrlFetchApp.fetch(url, {
-    headers: { Authorization: 'Bearer ' + token },
-    muteHttpExceptions: true
-  });
-  const blob = response.getBlob().setName(`${baseName}.xlsx`);
-  DriveApp.getFolderById(folders.XLSX).createFile(blob);
-}
-
-/** ===================== MAIN FLOWS ===================== **/
-// ใช้เรียกจาก Trigger on form submit (จริง)
-function onFormSubmit(e) {
-  // อัปเดตตารางหลักจากคำตอบล่าสุด
-  const meta = updateMainTableFromLast_();
-  const folders = ensureOutputFolders_();
-  const built = buildDocAndPdf_(meta, folders);
-  exportMainAsExcel_(folders, built.nameBase);
-}
-
-// ใช้ทดสอบแบบ manual (ไม่มี e)
-function test_fromLastRow() {
-  const meta = updateMainTableFromLast_();
-  const folders = ensureOutputFolders_();
-  const built = buildDocAndPdf_(meta, folders);
-  exportMainAsExcel_(folders, built.nameBase);
-  SpreadsheetApp.getActive().toast(`สร้างไฟล์เรียบร้อย: ${built.nameBase}`, 'RSC v2.7', 6);
-}
-
-/** ===================== Custom Menu ==================== **/
-function onOpen() {
-  SpreadsheetApp.getUi()
-    .createMenu('FoodLibrary — RSC')
-    .addItem('ทดสอบจากแถวล่าสุด (สร้าง DOC/PDF/Excel)', 'test_fromLastRow')
-    .addToUi();
-}
+</style>
