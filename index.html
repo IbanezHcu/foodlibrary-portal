@@ -1,154 +1,280 @@
-<!-- ================= Back office ================= -->
-<section id="backoffice" class="backoffice">
-  <h2 class="bo-title">Back office</h2>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#ff7a00" />
+  <meta name="description" content="FoodLibrary Center — ศูนย์รวมแบบฟอร์มและระบบภายในองค์กร FoodLibrary" />
+  <title>FoodLibrary Portal</title>
+  <link rel="icon" href="images/favicon.png" />
+  <style>
+    /* ===== Reset & Base ===== */
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
+      color:#191919;
+      background:linear-gradient(135deg,#fff7f0 0%,#fff 40%,#f4fff6 100%);
+      -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
 
-  <div class="bo-grid">
-    <!-- ========== แผนก HR (แม่แบบ) ========== -->
-    <section class="panel">
-      <header class="panel-head">
-        <h3>แผนก HR</h3>
-        <p>รวมลิงก์ฟอร์ม HR หลัก 4 รายการ — ตัวหนังสืออ่านง่าย ดูสบายตา</p>
-      </header>
-      <div class="panel-body">
-        <nav class="link-list">
-          <a class="list-link" href="#" target="_blank">1) แบบฟอร์มใบสมัครงาน</a>
-          <a class="list-link" href="#" target="_blank">2) แบบฟอร์มหนังสือรับรอง</a>
-          <a class="list-link" href="#" target="_blank">3) แบบฟอร์มสวัสดิการ</a>
-          <a class="list-link" href="#" target="_blank">4) แบบฟอร์มใบลา</a>
-        </nav>
+    /* ===== Header / Nav ===== */
+    header{
+      position:sticky;top:0;z-index:40;
+      backdrop-filter:saturate(180%) blur(8px);
+      background:rgba(255,255,255,.7);
+      border-bottom:1px solid rgba(0,0,0,.06);
+    }
+    header .container.nav{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:16px;padding:12px 24px;flex-wrap:nowrap;overflow-x:visible;
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{height:60px;width:auto;border-radius:10px;box-shadow:0 4px 12px rgba(255,122,0,.25);display:block}
+    .brand-title{font-size:24px;font-weight:800;line-height:1.1}
+    .subtitle{margin:0;opacity:.75}
+    .nav__group{display:flex;flex-direction:column;gap:2px}
+    .nav__actions{
+      display:flex;align-items:center;justify-content:flex-end;
+      gap:10px;flex:1;min-width:0;overflow:visible
+    }
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:10px 14px;border-radius:12px;border:1px solid rgba(0,0,0,.06);
+      background:#fff;font-weight:700;font-size:14px;cursor:pointer;
+      box-shadow:0 4px 16px rgba(0,0,0,.04);
+      transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+      white-space:nowrap
+    }
+    .btn:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(0,0,0,.08)}
+    .btn--primary{background:#0bb66f;color:#fff;border-color:transparent;box-shadow:0 8px 26px rgba(11,182,111,.3)}
+    .btn--primary:hover{filter:brightness(1.05)}
+
+    /* ===== Brand Bar ===== */
+    .brandbar{
+      background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,0));
+      padding: 5px 0 0;
+    }
+    .brandbar .container{padding:0 16px;}
+    .brandgrid{
+      display:grid;
+      gap:12px;
+      grid-template-columns: repeat(5, minmax(0,1fr));
+      align-items:center;
+    }
+    .brandcell{
+      width:100%;height:76px;background:#fff;
+      border-radius:14px;padding:6px 10px;
+      box-shadow:0 6px 18px rgba(0,0,0,.08);
+      display:grid;place-items:center;overflow:hidden;
+    }
+    .brandcell img{
+      width:60%;height:100%;object-fit:contain;display:block;
+    }
+    @media (max-width:980px){
+      .brandgrid{grid-template-columns:repeat(3,minmax(0,1fr));}
+      .brandcell{height:70px;}
+    }
+    @media (max-width:640px){
+      .brandgrid{grid-template-columns:repeat(2,minmax(0,1fr));}
+      .brandcell{height:64px;}
+    }
+
+    /* ===== Hero ===== */
+    .hero{display:grid;grid-template-columns:1fr;gap:12px;padding:6px 0}
+    .hero__card{
+      border-radius:20px;padding:28px;overflow:hidden;position:relative;
+      background:conic-gradient(from 200deg at 10% 20%,#fff 0deg,#fff0e6 80deg,#fff 160deg,#e8fff0 260deg,#fff 360deg);
+      border:1px solid rgba(0,0,0,.06);box-shadow:0 16px 60px rgba(0,0,0,.06)
+    }
+    .hero__eyebrow{font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#ff7a00}
+    .hero__title{font-size:clamp(28px,6vw,48px);line-height:1.05;margin:6px 0 10px;font-weight:900}
+    .hero__desc{font-size:16px;opacity:.78;max-width:70ch}
+    .hero__cta{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px}
+    .orb{position:absolute;border-radius:999px;filter:blur(20px);opacity:.35;pointer-events:none}
+    .orb--orange{width:220px;height:220px;background:#ff7a00;top:-40px;right:-40px}
+    .orb--green{width:180px;height:180px;background:#0bb66f;bottom:-40px;left:-40px}
+
+    /* ===== Cards / Sections ===== */
+    .section{margin:22px 0 40px}
+    .section__title{font-size:18px;font-weight:800;margin:8px 0 14px;letter-spacing:.2px}
+    .grid{display:grid;grid-template-columns:1fr;gap:14px}
+    @media (min-width:640px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (min-width:980px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    .card{position:relative;border:1px solid rgba(0,0,0,.06);border-radius:16px;overflow:hidden;background:#fff;padding:18px;transition:transform .15s ease,box-shadow .15s ease;box-shadow:0 6px 20px rgba(0,0,0,.04)}
+    .card:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.08)}
+    .card__title{font-weight:800;font-size:16px;margin-bottom:6px}
+    .card__desc{font-size:14px;opacity:.72;margin:0}
+    .chip{display:inline-block;font-size:11px;font-weight:700;padding:6px 10px;border-radius:999px;letter-spacing:.04em;background:#fff2e6;color:#a84d00;border:1px solid #ffd9b2;margin-top:10px}
+    .chip--ok{background:#eafff3;color:#0a7a4c;border-color:#caffde}
+
+    /* ===== HR Forms List Section ===== */
+    .card.card--list { padding: 18px 18px 14px; }
+    .card--list .list-title {
+      font-weight: 800;
+      font-size: 16px;
+      margin: 0 0 10px;
+    }
+    .card--list .list-desc {
+      font-size: 14px;
+      opacity: .72;
+      margin: 0 0 10px;
+    }
+    .card--list .list-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+    .card--list .list-links a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #efefef;
+      background: #fff;
+      color: #0f62fe;
+      transition: background .15s ease, transform .05s ease, border-color .15s ease;
+      font-size: .98rem;
+      line-height: 1.5;
+      text-decoration: none;
+    }
+    .card--list .list-links a:hover { background: #f5f8ff; }
+    .card--list .list-links a:active { transform: scale(.996); }
+    .card--list .list-links a.is-empty {
+      color: #6b7280;
+      background: #fcfcfc;
+      border-color: #f0f0f0;
+      cursor: default;
+    }
+    .card--list .list-links a.is-empty:hover { background: #fcfcfc; }
+
+    /* ===== Footer ===== */
+    footer{padding:30px 0 50px;opacity:.7;font-size:13px}
+    .footer__row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+
+    /* ===== Utility ===== */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+
+    /* ===== Fix Header Overlap on Mobile ===== */
+    @media (max-width:640px){
+      header .container.nav{
+        flex-wrap:wrap;
+        align-items:flex-start;
+        gap:8px;
+        padding:10px 16px;
+      }
+      .brand{flex:1 1 100%;gap:8px;}
+      .brand img{height:44px;border-radius:8px;}
+      .brand-title{font-size:18px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+      .subtitle{font-size:12px;line-height:1.2;margin-top:2px;}
+      .nav__actions{
+        width:100%;margin-top:4px;gap:8px;
+        justify-content:stretch;flex-wrap:wrap;
+      }
+      .nav__actions .btn{
+        flex:1 1 auto;min-width:140px;padding:10px 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="sr-only" href="#main">ข้ามไปยังเนื้อหา</a>
+
+  <!-- ===== Header ===== -->
+  <header role="banner">
+    <div class="container nav">
+      <div class="brand">
+        <img src="images/logo.png" alt="FoodLibrary Logo">
+        <div class="nav__group">
+          <div class="brand-title">FoodLibrary Center</div>
+          <p class="subtitle">ศูนย์รวมข้อมูลและระบบภายในองค์กร 🍜🍱🍹🍰</p>
+        </div>
+      </div>
+
+      <div class="nav__actions">
+        <a class="btn" href="http://foodlibrary.co.th/phun-phung/index.html" target="_blank" rel="noopener">แบรนด์ร้านอาหารในเครือ</a>
+        <a class="btn btn--primary" href="https://www.wongnai.com/delivery/businesses/129476hx/order" target="_blank" rel="noopener">Delivery 🛵</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Brand Bar ===== -->
+  <section class="brandbar">
+    <div class="container">
+      <div class="brandgrid">
+        <div class="brandcell"><img src="images/brand1.png" alt="เพลินพุง"></div>
+        <div class="brandcell"><img src="images/brand2.png" alt="ตำตำ"></div>
+        <div class="brandcell"><img src="images/brand3.png" alt="Tyme's Diner"></div>
+        <div class="brandcell"><img src="images/brand4.png" alt="The South"></div>
+        <div class="brandcell"><img src="images/brand5.png" alt="The Art of Food"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Main ===== -->
+  <main id="main" class="container">
+    <section class="hero">
+      <div class="hero__card">
+        <div class="orb orb--orange"></div>
+        <div class="orb orb--green"></div>
+        <div class="hero__eyebrow">Welcome</div>
+        <h1 class="hero__title">ยินดีต้อนรับสู่ <span style="color:#FFD700;text-shadow:1px 1px 3px rgba(0,0,0,.25)">FoodLibrary</span> Center</h1>
+        <p class="hero__desc">หน้าหลักสำหรับพนักงานและผู้เกี่ยวข้อง เพื่อเข้าถึงระบบสำคัญขององค์กรได้อย่างรวดเร็ว - แบบฟอร์ม, เอกสารมาตรฐาน, และพื้นที่ทำงานร่วมกัน</p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="http://foodlibrary.co.th/" target="_blank" rel="noopener">เว็บไซต์ FoodLibrary.co.th</a>
+          <a class="btn" href="https://drive.google.com/drive/u/2/home" target="_blank" rel="noopener">Google Drive</a>
+          <a class="btn" href="http://foodlibrary.co.th/the-south/index.html" target="_blank" rel="noopener">ติดต่อผู้ดูแล</a>
+        </div>
       </div>
     </section>
 
-    <!-- ========== แผนกบัญชี ========== -->
-    <section class="panel">
-      <header class="panel-head">
-        <h3>แผนกบัญชี</h3>
-        <p>สรุปสถิติคำขอ, เอกสาร, และสถานะการอนุมัติ</p>
-      </header>
-      <div class="panel-body">
-        <nav class="link-list">
-          <a class="list-link" href="#" target="_blank">1) รายงานสรุปยอด (Sheets)</a>
-          <a class="list-link" href="#" target="_blank">2) ภาษี/ใบกำกับภาษี</a>
-          <a class="list-link" href="#" target="_blank">3) เบิกค่าใช้จ่าย</a>
-          <a class="list-link" href="#" target="_blank">4) แบบฟอร์มอื่น ๆ</a>
-        </nav>
-      </div>
-    </section>
+    <!-- ===== Updated Links Section ===== -->
+    <section id="links" class="section">
+      <h2 class="section__title">Back office</h2>
+      <div class="grid">
 
-    <!-- ========== IT & Maintenance ========== -->
-    <section class="panel">
-      <header class="panel-head">
-        <h3>แจ้งงานซ่อม IT &amp; Maintenance</h3>
-        <p>รวมลิงก์เครื่องมือทำงาน เช่น POS, Inventory, Attendance</p>
-      </header>
-      <div class="panel-body">
-        <nav class="link-list">
-          <a class="list-link" href="#" target="_blank">1) แจ้งซ่อมอุปกรณ์/ระบบ</a>
-          <a class="list-link" href="#" target="_blank">2) สถานะงานซ่อม</a>
-          <a class="list-link" href="#" target="_blank">3) คู่มือ/วิธีใช้งาน</a>
-          <a class="list-link" href="#" target="_blank">4) แบบฟอร์มอื่น ๆ</a>
-        </nav>
-      </div>
-    </section>
+        <!-- การ์ด: แผนก HR -->
+        <div class="card card--list" id="hr">
+          <div class="list-title">แผนก HR</div>
+          <p class="list-desc">รวมลิงก์ฟอร์ม HR หลัก 4 รายการ — ตัวหนังสือล้วน อ่านง่าย ดูสบายตา</p>
+          <ul class="list-links">
+            <li><a href="#" title="แบบฟอร์มใบสมัครงาน">1) แบบฟอร์มใบสมัครงาน</a></li>
+            <li><a href="#" title="แบบฟอร์มหนังสือรับรอง">2) แบบฟอร์มหนังสือรับรอง</a></li>
+            <li><a href="#" title="แบบฟอร์มสวัสดิการ">3) แบบฟอร์มสวัสดิการ</a></li>
+            <li><a href="#" title="แบบฟอร์มใบลา">4) แบบฟอร์มใบลา</a></li>
+          </ul>
+        </div>
 
-    <!-- ========== แบบฟอร์มสั่งของครัวกลาง ========== -->
-    <section class="panel">
-      <header class="panel-head">
-        <h3>แบบฟอร์มสั่งของครัวกลาง</h3>
-        <p>รวมไฟล์ Word/Docs สำหรับใช้งานภายใน (TH/EN)</p>
-      </header>
-      <div class="panel-body">
-        <nav class="link-list">
-          <a class="list-link badge" href="#" target="_blank">Docs Library</a>
-          <!-- ถ้าต้องการเพิ่มรายการย่อย สามารถเพิ่มลิงก์ด้านล่างนี้ -->
-          <!-- <a class="list-link" href="#" target="_blank">รายการเอกสารตัวอย่าง</a> -->
-        </nav>
-      </div>
-    </section>
+        <!-- การ์ด: หัวข้ออื่น ๆ 1 -->
+        <div class="card card--list">
+          <div class="list-title">หัวข้ออื่น ๆ 1</div>
+          <p class="list-desc">ลิงก์ว่างสำหรับเพิ่มฟอร์มในอนาคต (4 รายการ)</p>
+          <ul class="list-links">
+            <li><a class="is-empty" href="javascript:void(0)">1) แบบฟอร์ม</a></li>
+            <li><a class="is-empty" href="javascript:void(0)">2) แบบฟอร์ม</a></li>
+            <li><a class="is-empty" href="javascript:void(0)">3) แบบฟอร์ม</a></li>
+            <li><a class="is-empty" href="javascript:void(0)">4) แบบฟอร์ม</a></li>
+          </ul>
+        </div>
 
-    <!-- ========== หัวข้ออื่น ๆ 1 ========== -->
-    <section class="panel">
-      <header class="panel-head">
-        <h3>หัวข้ออื่น ๆ 1</h3>
-        <p>ลิงก์ว่างสำหรับเพิ่มฟอร์มในอนาคต (4 รายการ)</p>
-      </header>
-      <div class="panel-body">
-        <nav class="link-list">
-          <a class="list-link" href="#" target="_blank">1) แบบฟอร์ม</a>
-          <a class="list-link" href="#" target="_blank">2) แบบฟอร์ม</a>
-          <a class="list-link" href="#" target="_blank">3) แบบฟอร์ม</a>
-          <a class="list-link" href="#" target="_blank">4) แบบฟอร์ม</a>
-        </nav>
-      </div>
-    </section>
+        <!-- การ์ดอื่นคงเดิม -->
+        <a class="card" href="https://docs.google.com/forms/d/e/1FAIpQLSdIXRXYWudxfF4c9yNkuaiIK5m7oracosAtb-3D-1GueE6dZg/viewform" target="_blank" rel="noopener">
+          <div class="card__title">แบบฟอร์มสั่งของครัวกลาง</div>
+          <p class="card__desc">รวมไฟล์ Word/Docs สำหรับใช้งานภายใน (TH/EN)</p>
+          <span class="chip">Docs Library</span>
+        </a>
 
-    <!-- ========== คุณสามารถคัดลอก panel ทั้งบล็อกนี้ไปทำแผนกใหม่ ๆ ได้เลย ========== -->
-  </div>
-</section>
+        <a class="card" href="#" target="_blank" rel="noopener">
+          <div class="card__title">แผนกบัญชี</div>
+          <p class="card__desc">สรุปสถิติคำขอ, เอกสาร, และสถานะการอนุมัติ</p>
+          <span class="chip">Sheets</span>
+        </a>
 
-<!-- ============== CSS (เพิ่มต่อท้ายไฟล์ หรือรวมกับสไตล์เดิมได้) ============== -->
-<style>
-  /* โครง Back office */
-  .backoffice { padding: 24px 16px 56px; }
-  .bo-title { font-size: 28px; margin: 0 0 16px; }
-
-  .bo-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 20px;
-  }
-  /* ปรับคอลัมน์ให้ยืดหยุ่น: desktop=4คอลฯ, tablet=6คอลฯ, mobile=12คอลฯ */
-  .panel { grid-column: span 4; }
-  @media (max-width: 1024px) { .panel { grid-column: span 6; } }
-  @media (max-width: 640px)  { .panel { grid-column: span 12; } }
-
-  /* การ์ดแผนกแบบเดียวกับ HR */
-  .panel {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.06);
-    border: 1px solid rgba(0,0,0,.06);
-    overflow: hidden;
-  }
-  .panel-head { padding: 18px 18px 0; }
-  .panel-head h3 {
-    margin: 0 0 6px;
-    font-size: 20px;
-  }
-  .panel-head p {
-    margin: 0 0 14px;
-    color: #5b5b5b;
-    font-size: 14px;
-  }
-  .panel-body { padding: 0 18px 18px; }
-
-  /* รายการลิงก์แบบปุ่มยาว */
-  .link-list { display: grid; gap: 10px; }
-  .list-link {
-    display: block;
-    text-decoration: none;
-    border: 1px solid rgba(0,0,0,.08);
-    padding: 12px 14px;
-    border-radius: 12px;
-    background: #f9fafb;
-    font-size: 15px;
-    color: #1a1a1a;
-    transition: transform .05s ease, box-shadow .15s ease, background .15s ease;
-  }
-  .list-link:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(0,0,0,.06);
-    background: #ffffff;
-  }
-
-  /* ปุ่ม badge (เช่น Docs Library) */
-  .badge {
-    display: inline-block;
-    width: max-content;
-    padding: 8px 12px;
-    border-radius: 999px;
-    background: #ffe9d7;
-    border: 1px solid #ffd2ad;
-    font-weight: 600;
-  }
-</style>
+        <a class="card" href="https://docs.google.com/spreadsheets/d/13nYeQMd9Si-EUP8cVW1klk2g0Jr57n12ZjD8C_Hdno4/edit?gid=2031573445#gid=2031573445" target="_blank" rel="noopener">
+          <div class="card__title">แจ้งงานซ่อม IT & Maintenance</div>
+          <p class="card__desc">รวมลิงก์เครื่องมือทำงาน เช่น POS, Inventory, Attendance
