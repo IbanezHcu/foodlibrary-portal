@@ -179,6 +179,28 @@
         flex:1 1 auto;min-width:140px;padding:10px 12px;
       }
     }
+    /* ===== Pastel Background Enhancement (ไม่กระทบ layout เดิม) ===== */
+body {
+  position: relative;
+  background: #fffdfb; /* เบสสีครีมอ่อน */
+}
+
+/* วาดก้อนสีพาสเทลลอย ๆ ด้านหลังทั้งหมด */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20%; /* ขยายเกินขอบจอเล็กน้อย เพื่อไม่ให้เห็นขอบ gradient */
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.9;
+
+  background:
+    radial-gradient(circle at 0% 0%,    rgba(255, 214, 214, 0.8) 0,  transparent 52%), /* ชมพูพีชมุมซ้ายบน */
+    radial-gradient(circle at 100% 15%, rgba(255, 244, 197, 0.8) 0, transparent 55%), /* เหลืองพาสเทลมุมขวาบน */
+    radial-gradient(circle at 12% 100%, rgba(202, 238, 214, 0.9) 0, transparent 55%), /* เขียวมิ้นต์มุมซ้ายล่าง */
+    radial-gradient(circle at 85% 100%, rgba(210, 228, 255, 0.9) 0, transparent 52%); /* ฟ้านมมุมขวาล่าง */
+}
+
   </style>
 </head>
 
