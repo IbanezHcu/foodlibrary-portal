@@ -1,0 +1,876 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FoodLibrary Board (Demo)</title>
+  <style>
+    :root{
+      --bg: #f6f7f8;
+      --card: rgba(255,255,255,.78);
+      --stroke: rgba(0,0,0,.08);
+      --text: #1f2328;
+      --muted: rgba(0,0,0,.55);
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --radius: 18px;
+      --radius2: 14px;
+
+      --urgent: #ff3b30;
+      --notice: #2f80ed;
+      --task: #19a05b;
+      --event: #f2c94c;
+      --gray: #8a8f98;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Thai", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(900px 450px at 12% 20%, rgba(46, 204, 113, .10), transparent 60%),
+        radial-gradient(900px 450px at 80% 35%, rgba(242, 201, 76, .14), transparent 55%),
+        radial-gradient(900px 450px at 65% 85%, rgba(47, 128, 237, .10), transparent 55%),
+        var(--bg);
+      min-height:100vh;
+    }
+
+    .wrap{
+      max-width: 1100px;
+      margin: 26px auto 60px;
+      padding: 0 16px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+    .logo{
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(25,160,91,.25), rgba(47,128,237,.18));
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      display:grid;
+      place-items:center;
+      font-weight:800;
+      color:#0f5132;
+    }
+    .brand h1{
+      font-size: 18px;
+      margin:0;
+      line-height: 1.1;
+    }
+    .brand p{
+      margin: 2px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .btn{
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(8px);
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor:pointer;
+      color: var(--text);
+      font-weight: 650;
+      box-shadow: 0 10px 25px rgba(0,0,0,.06);
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    .btn:hover{ filter: brightness(0.98); }
+
+    .hero{
+      border: 1px solid var(--stroke);
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+    .hero .row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .hero h2{
+      margin:0 0 6px;
+      font-size: 22px;
+      letter-spacing: .2px;
+    }
+    .hero .sub{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 760px;
+      line-height: 1.5;
+    }
+
+    .toolbar{
+      display:grid;
+      grid-template-columns: 1.3fr .9fr .9fr .9fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .field{
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.70);
+      backdrop-filter: blur(10px);
+      border-radius: 14px;
+      padding: 10px 12px;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.05);
+    }
+    .field input, .field select{
+      width: 100%;
+      border:none;
+      outline:none;
+      background: transparent;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .field .hint{
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .panel{
+      border: 1px solid var(--stroke);
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .panel-head{
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--stroke);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+    }
+    .panel-head .title{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+    .panel-head h3{
+      margin:0;
+      font-size: 16px;
+    }
+    .count{
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .list{
+      padding: 12px;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+
+    .card{
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.78);
+      border-radius: var(--radius2);
+      padding: 12px;
+      cursor:pointer;
+      box-shadow: 0 10px 22px rgba(0,0,0,.06);
+      position: relative;
+      overflow:hidden;
+    }
+    .card:hover{ filter: brightness(0.99); transform: translateY(-1px); transition: .12s; }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 750;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.6);
+    }
+    .badge-dot{
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: var(--gray);
+    }
+
+    .card-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 10px;
+    }
+    .card h4{
+      margin: 10px 0 6px;
+      font-size: 15px;
+      line-height: 1.35;
+    }
+    .meta{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .pin{
+      position:absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.72);
+    }
+
+    .accent{
+      position:absolute;
+      inset: 0;
+      width: 6px;
+      background: var(--gray);
+      left:0; top:0;
+    }
+
+    .aside{
+      padding: 14px 16px;
+    }
+    .aside h4{
+      margin: 0 0 10px;
+      font-size: 14px;
+    }
+    .kpi{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .kpi .box{
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.72);
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.05);
+    }
+    .kpi .num{
+      font-size: 18px;
+      font-weight: 900;
+      margin: 0 0 2px;
+    }
+    .kpi .lbl{
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0;
+    }
+    .legend{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 8px;
+    }
+    .legend .badge{ cursor: default; }
+
+    .empty{
+      padding: 18px;
+      color: var(--muted);
+      text-align:center;
+      font-size: 13px;
+    }
+
+    dialog{
+      width: min(760px, calc(100% - 24px));
+      border: 1px solid var(--stroke);
+      border-radius: 18px;
+      padding: 0;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 24px 70px rgba(0,0,0,.18);
+    }
+    dialog::backdrop{
+      background: rgba(0,0,0,.35);
+    }
+    .modal-head{
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--stroke);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+    }
+    .modal-head h3{ margin:0; font-size: 16px; }
+    .x{
+      border:none;
+      background: transparent;
+      font-size: 18px;
+      cursor:pointer;
+      padding: 6px 10px;
+      border-radius: 10px;
+    }
+    .x:hover{ background: rgba(0,0,0,.05); }
+    .modal-body{
+      padding: 16px;
+    }
+    .modal-body .content{
+      white-space: pre-wrap;
+      line-height: 1.55;
+      font-size: 14px;
+    }
+    .modal-foot{
+      padding: 14px 16px;
+      border-top: 1px solid var(--stroke);
+      display:flex;
+      justify-content:space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .muted{ color: var(--muted); font-size: 12px; }
+
+    @media (max-width: 920px){
+      .grid{ grid-template-columns: 1fr; }
+      .toolbar{ grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 520px){
+      .toolbar{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">FL</div>
+        <div>
+          <h1>FoodLibrary Board</h1>
+          <p>เดโม่: ข่าวสาร • แจ้งงาน • กิจกรรม • ประกาศด่วน</p>
+        </div>
+      </div>
+      <a class="btn" href="./index.html" title="กลับหน้า Portal">← กลับหน้า Portal</a>
+    </div>
+
+    <section class="hero">
+      <div class="row">
+        <div>
+          <h2>📌 Board Updates (Demo)</h2>
+          <p class="sub">
+            หน้านี้เป็นเดโม่เพื่อทดสอบ UI/UX ก่อนเชื่อมข้อมูลจริง
+            (ไม่มีผลกระทบกับระบบ Portal ที่รันอยู่)
+          </p>
+        </div>
+        <a class="btn" id="resetBtn" href="javascript:void(0)">รีเซ็ตตัวกรอง</a>
+      </div>
+
+      <div class="toolbar">
+        <div class="field">
+          <span class="hint">🔎</span>
+          <input id="q" type="search" placeholder="ค้นหา: หัวข้อ / แท็ก / รายละเอียด..." />
+        </div>
+
+        <div class="field">
+          <span class="hint">ประเภท</span>
+          <select id="type">
+            <option value="ALL">ทั้งหมด</option>
+            <option value="URGENT">ประกาศด่วน</option>
+            <option value="NOTICE">ข่าวสาร</option>
+            <option value="TASK">แจ้งงาน</option>
+            <option value="EVENT">กิจกรรม</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <span class="hint">สาขา</span>
+          <select id="branch">
+            <option value="ALL">ทั้งหมด</option>
+            <option value="ALL_BRANCHES">ทุกสาขา</option>
+            <option value="OFFICE">Office</option>
+            <option value="TTMG">TTMG</option>
+            <option value="PPMG">PPMG</option>
+            <option value="TTIM">TTIM</option>
+            <option value="PPIM">PPIM</option>
+            <option value="TSIM">TSIM</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <span class="hint">เรียง</span>
+          <select id="sort">
+            <option value="PINNED_NEW">ปักหมุดก่อน + ล่าสุด</option>
+            <option value="NEW">ล่าสุด</option>
+            <option value="OLD">เก่าสุด</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <div class="panel-head">
+          <div class="title">
+            <h3>รายการประกาศ</h3>
+            <span class="count" id="countText"></span>
+          </div>
+          <span class="count" id="nowText"></span>
+        </div>
+        <div class="list" id="list"></div>
+        <div class="empty" id="empty" style="display:none;">ไม่พบรายการที่ตรงกับตัวกรอง</div>
+      </section>
+
+      <aside class="panel">
+        <div class="panel-head">
+          <div class="title"><h3>สรุป</h3></div>
+          <span class="count">Demo KPI</span>
+        </div>
+        <div class="aside">
+          <div class="kpi">
+            <div class="box">
+              <p class="num" id="kUrgent">0</p>
+              <p class="lbl">ด่วน (Active)</p>
+            </div>
+            <div class="box">
+              <p class="num" id="kActive">0</p>
+              <p class="lbl">ทั้งหมด (Active)</p>
+            </div>
+            <div class="box">
+              <p class="num" id="kToday">0</p>
+              <p class="lbl">วันนี้</p>
+            </div>
+            <div class="box">
+              <p class="num" id="kPinned">0</p>
+              <p class="lbl">ปักหมุด</p>
+            </div>
+          </div>
+
+          <h4>Legend</h4>
+          <div class="legend">
+            <span class="badge"><span class="badge-dot" style="background:var(--urgent)"></span>ด่วน</span>
+            <span class="badge"><span class="badge-dot" style="background:var(--notice)"></span>ข่าวสาร</span>
+            <span class="badge"><span class="badge-dot" style="background:var(--task)"></span>แจ้งงาน</span>
+            <span class="badge"><span class="badge-dot" style="background:var(--event)"></span>กิจกรรม</span>
+          </div>
+
+          <div style="height:12px"></div>
+          <h4>ขั้นถัดไป (หลังเดโม่ผ่าน)</h4>
+          <p class="muted" style="margin:0;line-height:1.55">
+            1) สร้าง Google Sheet เป็นฐานข้อมูล Board<br/>
+            2) Apps Script ทำ API (JSON)<br/>
+            3) เปลี่ยนจาก Mock → Fetch ของจริง<br/>
+            4) (เสริม) LINE แจ้งเตือน + ระบบรับทราบ
+          </p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <dialog id="modal">
+    <div class="modal-head">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span id="mBadge" class="badge"></span>
+        <h3 id="mTitle"></h3>
+      </div>
+      <button class="x" id="closeBtn" aria-label="close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="meta" id="mMeta"></div>
+      <div style="height:12px"></div>
+      <div class="content" id="mContent"></div>
+      <div id="mAttachWrap" style="margin-top:14px; display:none;">
+        <div style="font-weight:800; margin-bottom:6px;">ไฟล์แนบ</div>
+        <div class="meta" id="mAttach"></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <div class="muted" id="mFoot"></div>
+      <button class="btn" id="ackBtn" title="เดโม่: ปุ่มรับทราบ (ยังไม่บันทึกจริง)">✅ รับทราบ (Demo)</button>
+    </div>
+  </dialog>
+
+  <script>
+    // ========= Mock Data (เดโม่) =========
+    // type: URGENT | NOTICE | TASK | EVENT
+    // branchScope: ALL_BRANCHES | OFFICE | TTMG | PPMG | TTIM | PPIM | TSIM | ...
+    const POSTS = [
+      {
+        id: "BD-0007",
+        type: "URGENT",
+        pinned: true,
+        title: "ระบบเบิกวัตถุดิบ RSC ปิดปรับปรุง 14:00–16:00",
+        content: "เนื่องจากมีการอัปเดตระบบเอกสาร/การออก PDF\nระหว่างเวลา 14:00–16:00 ขอให้สาขางดใช้งานชั่วคราว\nหากเร่งด่วนให้แจ้ง Office.",
+        branchScope: ["ALL_BRANCHES"],
+        tags: ["RSC","PDF","Maintenance"],
+        createdBy: "IT/Office",
+        createdAt: "2026-01-13T08:10:00+07:00",
+        startAt: "2026-01-13T08:10:00+07:00",
+        endAt: "2026-01-13T16:30:00+07:00",
+        attachments: [{ label:"คู่มือการใช้งาน (Draft)", url:"#"}]
+      },
+      {
+        id: "BD-0006",
+        type: "NOTICE",
+        pinned: true,
+        title: "ประกาศ: ตารางเวรส่งของครัวกลางสัปดาห์นี้",
+        content: "อัปเดตตารางเวรส่งของครัวกลาง (สัปดาห์ 2)\nกรุณาตรวจสอบเวลารับของและเตรียมพื้นที่รับของหน้าร้าน.",
+        branchScope: ["ALL_BRANCHES"],
+        tags: ["ครัวกลาง","ส่งของ"],
+        createdBy: "RSC",
+        createdAt: "2026-01-13T07:40:00+07:00",
+        startAt: "2026-01-13T07:40:00+07:00",
+        endAt: "2026-01-20T23:59:00+07:00",
+        attachments: [{ label:"ดูตารางงานส่ง", url:"#"}]
+      },
+      {
+        id: "BD-0005",
+        type: "TASK",
+        pinned: false,
+        title: "แจ้งงาน: เปลี่ยนหัวฉีดล้างจาน (TTMG)",
+        content: "อาการ: น้ำรั่วที่ข้อต่อ / แรงดันตก\nให้ช่างตรวจและเปลี่ยนหัวฉีด พร้อมเช็คซีลยาง.",
+        branchScope: ["TTMG"],
+        tags: ["Maintenance","ล้างจาน"],
+        createdBy: "TTMG",
+        createdAt: "2026-01-13T07:15:00+07:00",
+        startAt: "2026-01-13T07:15:00+07:00",
+        endAt: "2026-02-01T23:59:00+07:00",
+        attachments: []
+      },
+      {
+        id: "BD-0004",
+        type: "EVENT",
+        pinned: false,
+        title: "กิจกรรม: Training มาตรฐานความสะอาด (Office)",
+        content: "อบรมมาตรฐานความสะอาดและความปลอดภัยอาหาร\nเวลา 10:00–11:30 ณ Office\nผู้จัดการสาขาเข้าร่วม 1 คน/สาขา.",
+        branchScope: ["OFFICE","ALL_BRANCHES"],
+        tags: ["Training","SOP"],
+        createdBy: "HR",
+        createdAt: "2026-01-12T18:30:00+07:00",
+        startAt: "2026-01-14T10:00:00+07:00",
+        endAt: "2026-01-14T11:30:00+07:00",
+        attachments: [{ label:"Agenda", url:"#"}]
+      },
+      {
+        id: "BD-0003",
+        type: "NOTICE",
+        pinned: false,
+        title: "อัปเดต: Portal เพิ่มเมนู HR Forms ใหม่",
+        content: "เพิ่มเมนู HR Forms: ใบสมัครงาน / หนังสือรับรอง / สวัสดิการ / ใบลา\nและเตรียมหัวข้ออื่น ๆ สำหรับต่อยอด.",
+        branchScope: ["ALL_BRANCHES"],
+        tags: ["Portal","HR"],
+        createdBy: "Admin",
+        createdAt: "2026-01-12T12:05:00+07:00",
+        startAt: "2026-01-12T12:05:00+07:00",
+        endAt: "2026-02-12T23:59:00+07:00",
+        attachments: []
+      },
+      // ตัวอย่างที่หมดอายุแล้ว (จะถูกซ่อนอัตโนมัติ)
+      {
+        id: "BD-0002",
+        type: "TASK",
+        pinned: false,
+        title: "(หมดอายุ) แจ้งงาน: ตรวจเช็คสต็อกซอส (PPMG)",
+        content: "รายการนี้เป็นตัวอย่างที่หมดอายุแล้ว ระบบเดโม่จะซ่อนอัตโนมัติ",
+        branchScope: ["PPMG"],
+        tags: ["Stock"],
+        createdBy: "PPMG",
+        createdAt: "2026-01-10T10:00:00+07:00",
+        startAt: "2026-01-10T10:00:00+07:00",
+        endAt: "2026-01-11T10:00:00+07:00",
+        attachments: []
+      }
+    ];
+
+    // ========= Helpers =========
+    const $ = (id) => document.getElementById(id);
+
+    function nowISO(){
+      return new Date().toISOString();
+    }
+
+    function parseDate(s){
+      // ISO with timezone -> Date
+      const d = new Date(s);
+      return isNaN(d) ? null : d;
+    }
+
+    function fmtDT(s){
+      const d = parseDate(s);
+      if(!d) return "-";
+      return d.toLocaleString("th-TH", {
+        year:"2-digit", month:"2-digit", day:"2-digit",
+        hour:"2-digit", minute:"2-digit"
+      });
+    }
+
+    function isActive(post, now){
+      const start = parseDate(post.startAt) || new Date(0);
+      const end = parseDate(post.endAt) || new Date("2999-12-31");
+      return now >= start && now <= end;
+    }
+
+    function typeLabel(t){
+      if(t==="URGENT") return "ประกาศด่วน";
+      if(t==="NOTICE") return "ข่าวสาร";
+      if(t==="TASK") return "แจ้งงาน";
+      if(t==="EVENT") return "กิจกรรม";
+      return "อื่น ๆ";
+    }
+
+    function typeColor(t){
+      if(t==="URGENT") return getCSS("--urgent");
+      if(t==="NOTICE") return getCSS("--notice");
+      if(t==="TASK") return getCSS("--task");
+      if(t==="EVENT") return getCSS("--event");
+      return getCSS("--gray");
+    }
+
+    function getCSS(varName){
+      return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+    }
+
+    function branchText(scope){
+      if(!scope || scope.length===0) return "ไม่ระบุ";
+      if(scope.includes("ALL_BRANCHES")) return "ทุกสาขา";
+      return scope.join(", ");
+    }
+
+    // ========= State =========
+    const state = {
+      q: "",
+      type: "ALL",
+      branch: "ALL",
+      sort: "PINNED_NEW"
+    };
+
+    // ========= Render =========
+    function applyFilters(posts){
+      const now = new Date();
+      // active only
+      let out = posts.filter(p => isActive(p, now));
+
+      // q
+      const q = state.q.trim().toLowerCase();
+      if(q){
+        out = out.filter(p => {
+          const bag = [
+            p.id, p.title, p.content,
+            ...(p.tags||[]),
+            ...(p.branchScope||[]),
+            p.createdBy
+          ].join(" ").toLowerCase();
+          return bag.includes(q);
+        });
+      }
+
+      // type
+      if(state.type !== "ALL"){
+        out = out.filter(p => p.type === state.type);
+      }
+
+      // branch
+      if(state.branch !== "ALL"){
+        out = out.filter(p => (p.branchScope||[]).includes(state.branch));
+      }
+
+      // sort
+      const byCreated = (a,b) => parseDate(b.createdAt) - parseDate(a.createdAt);
+      const byCreatedOld = (a,b) => parseDate(a.createdAt) - parseDate(b.createdAt);
+
+      if(state.sort === "NEW"){
+        out.sort(byCreated);
+      }else if(state.sort === "OLD"){
+        out.sort(byCreatedOld);
+      }else{
+        // pinned first then newest
+        out.sort((a,b)=>{
+          const ap = a.pinned ? 1:0;
+          const bp = b.pinned ? 1:0;
+          if(bp !== ap) return bp - ap;
+          return byCreated(a,b);
+        });
+      }
+
+      return out;
+    }
+
+    function render(){
+      const list = $("list");
+      const empty = $("empty");
+      list.innerHTML = "";
+
+      const filtered = applyFilters(POSTS);
+
+      $("countText").textContent = `${filtered.length} รายการ`;
+      $("nowText").textContent = `อัปเดต: ${new Date().toLocaleString("th-TH", {hour:"2-digit", minute:"2-digit"})}`;
+
+      // KPI
+      const now = new Date();
+      const active = POSTS.filter(p => isActive(p, now));
+      $("kActive").textContent = active.length;
+      $("kUrgent").textContent = active.filter(p => p.type==="URGENT").length;
+      $("kPinned").textContent = active.filter(p => p.pinned).length;
+      const todayStr = new Date().toDateString();
+      $("kToday").textContent = active.filter(p => (parseDate(p.createdAt)?.toDateString() === todayStr)).length;
+
+      if(filtered.length === 0){
+        empty.style.display = "block";
+        return;
+      }
+      empty.style.display = "none";
+
+      for(const p of filtered){
+        const card = document.createElement("div");
+        card.className = "card";
+        card.dataset.id = p.id;
+
+        const accent = document.createElement("div");
+        accent.className = "accent";
+        accent.style.background = typeColor(p.type);
+        card.appendChild(accent);
+
+        if(p.pinned){
+          const pin = document.createElement("div");
+          pin.className = "pin";
+          pin.textContent = "📌 ปักหมุด";
+          card.appendChild(pin);
+        }
+
+        const top = document.createElement("div");
+        top.className = "card-top";
+
+        const badge = document.createElement("span");
+        badge.className = "badge";
+        const dot = document.createElement("span");
+        dot.className = "badge-dot";
+        dot.style.background = typeColor(p.type);
+        badge.appendChild(dot);
+        badge.appendChild(document.createTextNode(typeLabel(p.type)));
+        top.appendChild(badge);
+
+        const id = document.createElement("div");
+        id.className = "count";
+        id.textContent = p.id;
+        top.appendChild(id);
+
+        const h4 = document.createElement("h4");
+        h4.textContent = p.title;
+
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        meta.innerHTML = `
+          <span>📍 ${branchText(p.branchScope)}</span>
+          <span>⏰ ${fmtDT(p.createdAt)}</span>
+          <span>👤 ${p.createdBy || "-"}</span>
+          ${p.tags?.length ? `<span>🏷️ ${p.tags.join(", ")}</span>` : ""}
+        `;
+
+        card.appendChild(top);
+        card.appendChild(h4);
+        card.appendChild(meta);
+
+        card.addEventListener("click", ()=> openModal(p));
+        list.appendChild(card);
+      }
+    }
+
+    // ========= Modal =========
+    function openModal(p){
+      const m = $("modal");
+      const badge = $("mBadge");
+      badge.innerHTML = `<span class="badge-dot" style="background:${typeColor(p.type)}"></span>${typeLabel(p.type)}`;
+
+      $("mTitle").textContent = p.title;
+
+      $("mMeta").innerHTML = `
+        <span><b>${p.id}</b></span>
+        <span>📍 ${branchText(p.branchScope)}</span>
+        <span>⏰ โพสต์: ${fmtDT(p.createdAt)}</span>
+        <span>🕒 แสดง: ${fmtDT(p.startAt)} – ${fmtDT(p.endAt)}</span>
+        <span>👤 ${p.createdBy || "-"}</span>
+        ${p.tags?.length ? `<span>🏷️ ${p.tags.join(", ")}</span>` : ""}
+      `;
+
+      $("mContent").textContent = p.content || "-";
+
+      const hasAttach = p.attachments && p.attachments.length > 0;
+      $("mAttachWrap").style.display = hasAttach ? "block" : "none";
+      if(hasAttach){
+        $("mAttach").innerHTML = p.attachments.map(a => {
+          const safe = (a.url || "#");
+          const lbl = (a.label || "ไฟล์แนบ");
+          return `<a class="btn" style="padding:8px 10px;border-radius:12px;" href="${safe}" target="_blank" rel="noreferrer">📎 ${lbl}</a>`;
+        }).join(" ");
+      }
+
+      $("mFoot").textContent = `Demo: ยังไม่บันทึกสถานะรับทราบจริง (Phase 2 จะต่อฐานข้อมูลได้)`;
+      m.showModal();
+    }
+
+    function closeModal(){
+      const m = $("modal");
+      if(m.open) m.close();
+    }
+
+    // ========= Events =========
+    $("q").addEventListener("input", (e)=>{ state.q = e.target.value; render(); });
+    $("type").addEventListener("change", (e)=>{ state.type = e.target.value; render(); });
+    $("branch").addEventListener("change", (e)=>{ state.branch = e.target.value; render(); });
+    $("sort").addEventListener("change", (e)=>{ state.sort = e.target.value; render(); });
+
+    $("resetBtn").addEventListener("click", ()=>{
+      state.q = ""; state.type="ALL"; state.branch="ALL"; state.sort="PINNED_NEW";
+      $("q").value = "";
+      $("type").value = "ALL";
+      $("branch").value = "ALL";
+      $("sort").value = "PINNED_NEW";
+      render();
+    });
+
+    $("closeBtn").addEventListener("click", closeModal);
+    $("modal").addEventListener("click", (e)=>{
+      const rect = e.target.getBoundingClientRect?.();
+      // close on backdrop click
+      if(e.target.tagName === "DIALOG") closeModal();
+    });
+    $("ackBtn").addEventListener("click", ()=>{
+      alert("✅ รับทราบแล้ว (Demo)\n\nPhase 2: จะบันทึกลงฐานข้อมูลต่อคน/ต่อสาขาได้");
+      closeModal();
+    });
+
+    // init
+    render();
+  </script>
+</body>
+</html>
