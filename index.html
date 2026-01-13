@@ -17,9 +17,26 @@
       color:#191919;
       background:linear-gradient(135deg,#fff7f0 0%,#fff 40%,#f4fff6 100%);
       -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+      position: relative;
+      background: #fffdfb; /* เบสสีครีมอ่อน */
     }
     a{color:inherit;text-decoration:none}
     .container{max-width:1100px;margin:0 auto;padding:24px}
+
+    /* วาดก้อนสีพาสเทลลอย ๆ ด้านหลังทั้งหมด */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -20%;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.9;
+      background:
+        radial-gradient(circle at 0% 0%,    rgba(255, 214, 214, 0.8) 0,  transparent 52%),
+        radial-gradient(circle at 100% 15%, rgba(255, 244, 197, 0.8) 0, transparent 55%),
+        radial-gradient(circle at 12% 100%, rgba(202, 238, 214, 0.9) 0, transparent 55%),
+        radial-gradient(circle at 85% 100%, rgba(210, 228, 255, 0.9) 0, transparent 52%);
+    }
 
     /* ===== Header / Nav ===== */
     header{
@@ -179,28 +196,126 @@
         flex:1 1 auto;min-width:140px;padding:10px 12px;
       }
     }
-    /* ===== Pastel Background Enhancement (ไม่กระทบ layout เดิม) ===== */
-body {
-  position: relative;
-  background: #fffdfb; /* เบสสีครีมอ่อน */
-}
 
-/* วาดก้อนสีพาสเทลลอย ๆ ด้านหลังทั้งหมด */
-body::before {
-  content: "";
-  position: fixed;
-  inset: -20%; /* ขยายเกินขอบจอเล็กน้อย เพื่อไม่ให้เห็นขอบ gradient */
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.9;
+    /* =========================================================
+       ===== Board Mini (หน้าแรก) — Phase 1 ใช้ Mock Data =====
+       ========================================================= */
+    .board-mini{
+      margin: 14px 0 8px; /* ให้กระชับก่อน Back office */
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(0,0,0,.06);
+      background: rgba(255,255,255,.75);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 16px 60px rgba(0,0,0,.06);
+      overflow:hidden;
+      position: relative;
+    }
+    .board-mini::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      opacity:.7;
+      background:
+        radial-gradient(420px 220px at 88% 20%, rgba(255,122,0,.14), transparent 60%),
+        radial-gradient(420px 220px at 10% 80%, rgba(11,182,111,.12), transparent 58%);
+    }
 
-  background:
-    radial-gradient(circle at 0% 0%,    rgba(255, 214, 214, 0.8) 0,  transparent 52%), /* ชมพูพีชมุมซ้ายบน */
-    radial-gradient(circle at 100% 15%, rgba(255, 244, 197, 0.8) 0, transparent 55%), /* เหลืองพาสเทลมุมขวาบน */
-    radial-gradient(circle at 12% 100%, rgba(202, 238, 214, 0.9) 0, transparent 55%), /* เขียวมิ้นต์มุมซ้ายล่าง */
-    radial-gradient(circle at 85% 100%, rgba(210, 228, 255, 0.9) 0, transparent 52%); /* ฟ้านมมุมขวาล่าง */
-}
+    .board-mini-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 10px;
+    }
+    .board-mini-kicker{
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,.55);
+      margin-bottom: 3px;
+    }
+    .board-mini-title{
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: .2px;
+    }
+    .board-mini-sub{
+      margin: 6px 0 0;
+      font-size: 13px;
+      opacity: .72;
+      max-width: 80ch;
+    }
+    .board-mini-actions{display:flex;align-items:center;gap:10px}
+    .board-mini-btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,.06);
+      background: #fff;
+      font-weight: 800;
+      font-size: 14px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.04);
+    }
+    .board-mini-btn:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(0,0,0,.08)}
 
+    .board-mini-list{
+      position: relative;
+      z-index: 1;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .board-mini-card{
+      display:block;
+      position: relative;
+      border: 1px solid rgba(0,0,0,.06);
+      background: rgba(255,255,255,.82);
+      border-radius: 16px;
+      padding: 12px 12px 12px 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,.04);
+      transition: transform .15s ease, box-shadow .15s ease;
+      overflow:hidden;
+    }
+    .board-mini-card:hover{transform:translateY(-1px);box-shadow:0 12px 32px rgba(0,0,0,.08)}
+    .board-mini-accent{
+      position:absolute;left:0;top:0;bottom:0;width:6px;background:#8a8f98;
+    }
+    .board-mini-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid rgba(0,0,0,.06);
+      background: rgba(255,255,255,.65);
+      font-size:12px;font-weight:900;
+    }
+    .board-mini-dot{width:8px;height:8px;border-radius:999px;background:#8a8f98}
+    .board-mini-h{
+      margin: 10px 0 6px;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+    .board-mini-meta{
+      display:flex;flex-wrap:wrap;gap:6px 10px;
+      font-size: 12px;
+      opacity: .72;
+    }
+    .board-mini-empty{
+      position: relative;
+      z-index: 1;
+      padding: 12px;
+      text-align:center;
+      opacity: .72;
+      font-size: 13px;
+    }
+    @media (max-width: 860px){
+      .board-mini-list{grid-template-columns: 1fr;}
+    }
   </style>
 </head>
 
@@ -226,44 +341,27 @@ body::before {
   </header>
 
   <!-- ===== Brand Bar ===== -->
-<section class="brandbar">
-  <div class="container">
-    <div class="brandgrid">
-      <a class="brandcell" href="https://www.wongnai.com/delivery/businesses/129476hx/order" target="_blank" rel="noopener">
-        <img src="images/brand1.png" alt="เพลินพุง">
-      </a>
-      <a class="brandcell" href="https://www.wongnai.com/delivery/businesses/129476hx/order" target="_blank" rel="noopener">
-        <img src="images/brand2.png" alt="ตำตำ">
-      </a>
-      <a class="brandcell" href="https://www.wongnai.com/delivery/businesses/3145057qq-tyme-s-diner-siam-square-one/order" target="_blank" rel="noopener">
-        <img src="images/brand3.png" alt="Tyme's Diner">
-      </a>
-      <a class="brandcell" href="https://www.wongnai.com/delivery/businesses/369642BN-%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B9%80%E0%B8%8B%E0%B8%B2%E0%B8%97%E0%B9%8C-%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%84%E0%B8%B2%E0%B9%80%E0%B8%9F%E0%B9%88-%E0%B8%81%E0%B8%B2%E0%B9%81%E0%B8%9F%E0%B9%83%E0%B8%95%E0%B9%89%E0%B9%83%E0%B8%95%E0%B9%89-the-south-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AD%E0%B8%B4%E0%B8%A1%E0%B8%9E%E0%B8%B5%E0%B9%80%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%A5-%E0%B8%AA%E0%B8%B3%E0%B9%82%E0%B8%A3%E0%B8%87/order" target="_blank" rel="noopener">
-        <img src="images/brand4.png" alt="The South">
-      </a>
-      <a class="brandcell" href="https://www.wongnai.com/delivery/businesses/129476hx/order" target="_blank" rel="noopener">
-        <img src="images/brand5.png" alt="The Art of Food">
-      </a>
-    </div>
-  </div>
-</section>
-
- <!-- <section class="brandbar">
+  <section class="brandbar">
     <div class="container">
       <div class="brandgrid">
         <a class="brandcell" href="https://www.wongnai.com/delivery/businesses/129476hx/order" target="_blank" rel="noopener">
-  <img src="images/brand1.png" alt="เพลินพุง">
-          <a class="brandcell" href="https://www.wongnai.com/delivery/businesses/129476hx/order" target="_blank" rel="noopener">
-  <img src="images/brand2.png" alt="ตำตำ" alt="ตำตำ">
-        
-</a>
-         <div class="brandcell"><img src="images/brand2.png" alt="ตำตำ"></div> 
-        <div class="brandcell"><img src="images/brand3.png" alt="Tyme's Diner"></div>
-        <div class="brandcell"><img src="images/brand4.png" alt="The South"></div>
-        <div class="brandcell"><img src="images/brand5.png" alt="The Art of Food"></div>
+          <img src="images/brand1.png" alt="เพลินพุง">
+        </a>
+        <a class="brandcell" href="https://www.wongnai.com/delivery/businesses/129476hx/order" target="_blank" rel="noopener">
+          <img src="images/brand2.png" alt="ตำตำ">
+        </a>
+        <a class="brandcell" href="https://www.wongnai.com/delivery/businesses/3145057qq-tyme-s-diner-siam-square-one/order" target="_blank" rel="noopener">
+          <img src="images/brand3.png" alt="Tyme's Diner">
+        </a>
+        <a class="brandcell" href="https://www.wongnai.com/delivery/businesses/369642BN-%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B9%80%E0%B8%8B%E0%B8%B2%E0%B8%97%E0%B9%8C-%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%84%E0%B8%B2%E0%B9%80%E0%B8%9F%E0%B9%88-%E0%B8%81%E0%B8%B2%E0%B9%81%E0%B8%9F%E0%B9%83%E0%B8%95%E0%B9%89%E0%B9%83%E0%B8%95%E0%B9%89-the-south-%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AD%E0%B8%B4%E0%B8%A1%E0%B8%9E%E0%B8%B5%E0%B9%80%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%A5-%E0%B8%AA%E0%B8%B3%E0%B9%82%E0%B8%A3%E0%B8%87/order" target="_blank" rel="noopener">
+          <img src="images/brand4.png" alt="The South">
+        </a>
+        <a class="brandcell" href="https://www.wongnai.com/delivery/businesses/129476hx/order" target="_blank" rel="noopener">
+          <img src="images/brand5.png" alt="The Art of Food">
+        </a>
       </div>
     </div>
-  </section>  -->
+  </section>
 
   <!-- ===== Main ===== -->
   <main id="main" class="container">
@@ -282,6 +380,26 @@ body::before {
       </div>
     </section>
 
+    <!-- =========================================================
+         ===== Board Updates (Mini) — Phase 1 ใช้ Mock Data =====
+         วางใต้ Hero และเหนือ Back office ตามที่เลือก 1A
+         ========================================================= -->
+    <section class="board-mini" aria-label="Board Updates">
+      <div class="board-mini-head">
+        <div>
+          <div class="board-mini-kicker">📌 Board Updates</div>
+          <div class="board-mini-title">ข่าวสาร • แจ้งงาน • กิจกรรม • ประกาศด่วน</div>
+          <p class="board-mini-sub">สรุปประกาศล่าสุด (เดโม่) — กด “ดูทั้งหมด” เพื่อเปิดหน้าบอร์ดเต็ม</p>
+        </div>
+        <div class="board-mini-actions">
+          <a class="board-mini-btn" href="./board-demo.html">ดูทั้งหมด</a>
+        </div>
+      </div>
+
+      <div id="boardMiniList" class="board-mini-list"></div>
+      <div id="boardMiniEmpty" class="board-mini-empty" style="display:none;">ยังไม่มีประกาศในตอนนี้</div>
+    </section>
+
     <!-- ===== Back office ===== -->
     <section id="links" class="section">
       <h2 class="section__title">Back office</h2>
@@ -296,7 +414,6 @@ body::before {
             <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfD_5wiVwOZwa9Dl4nuDFNzfSnugJSRxMjPpl2c_yXBnk6l6Q/viewform" target="_blank" rel="noopener" title="ฟอร์ม 2 แผนก HR">2) แบบฟอร์ม เบิกอุปกรณ์สำนักงาน ✏</a></li>
             <li><a href="https://docs.google.com/spreadsheets/d/13rkc93XZAVqZmRxaI4F15rkECYTKXvKJM3Dz5ZdVIqc/edit?gid=0#gid=0" target="_blank" rel="noopener" title="ฟอร์ม 3 แผนก HR">3) ข้อมูลเบอร์โทรศัพท์ Office 📞</a></li>
             <li><a href="https://docs.google.com/spreadsheets/d/1kOLYlS5qrIbi2R-RBcde9Ymv2TcUxJbdjBT2NBnUSts/edit?gid=0#gid=0" target="_blank" rel="noopener" title="ฟอร์ม 4 แผนก HR">4) ข้อมูลรายการ E-mail 🪪</a></li>
-            
           </ul>
         </div>
 
@@ -324,7 +441,6 @@ body::before {
           </ul>
         </div>
 
-        
         <!-- แจ้งซ่อม IT -->
         <div class="card card--list" id="it-maintenance">
           <div class="list-title"> 🪛🔧 แจ้งซ่อม IT & Maintenance ⚙️🔨 </div>
@@ -345,30 +461,30 @@ body::before {
             <li><a href="index.html" target="_blank" rel="noopener" title="ฟอร์ม 4 แจ้งซ่อม IT">4) - </a></li>
           </ul>
         </div>
-        
-        <!-- คู่มือ -->
-          <div class="card card--list" id="others">
-            <div class="list-title">คู่มือ 📒📖📋</div>
-            <p class="list-desc">คู่มืออื่นๆ</p>
-            <ul class="list-links">
-              <li><a href="https://drive.google.com/file/d/15les1HdIiCxfCEQWsJf8kqt2Vw80muCk/view?usp=sharing" target="_blank" rel="noopener" title="ฟอร์ม 1 อื่น ๆ">1) คู่มือการเปิดใช้งาน Email บริษัท 📋</a></li>
-              <li><a href="https://drive.google.com/file/d/1tKXSneiE3bQAL2xdtFsBnOBKCx18YE3X/view?usp=sharing" target="_blank" rel="noopener" title="ฟอร์ม 2 อื่น ๆ">2) คู่มือการใช้งาน Appsheet แจ้งซ่อม 📋</a></li>
-              <li><a href="index.html" target="_blank" rel="noopener" title="ฟอร์ม 3 อื่น ๆ">3) - </a></li>
-              <li><a href="index.html" target="_blank" rel="noopener" title="ฟอร์ม 4 อื่น ๆ">4) - </a></li>
-            </ul>
-          </div>
 
-         <!-- อื่น ๆ -->
-          <div class="card card--list" id="others">
-            <div class="list-title">อื่น ๆ</div>
-            <p class="list-desc">Data Center</p>
-            <ul class="list-links">
-              <li><a href="https://fl-023985485.sg3.quickconnect.to/#/signin" target="_blank" rel="noopener" title="ฟอร์ม 1 อื่น ๆ">1) NAS Sharedata Foodlibrary  </a></li>
-              <li><a href="https://docs.google.com/spreadsheets/d/1Ocl_eJSbtGtRiihgXr5DI3bTOCc1HY3ByP37nXF4css/edit?gid=0#gid=0" target="_blank" rel="noopener" title="ฟอร์ม 2 อื่น ๆ">2) ข้อมูล IT </a></li>
-              <li><a href="index.html" target="_blank" rel="noopener" title="ฟอร์ม 3 อื่น ๆ">3) - </a></li>
-              <li><a href="index.html" target="_blank" rel="noopener" title="ฟอร์ม 4 อื่น ๆ">4) - </a></li>
-            </ul>
-          </div>
+        <!-- คู่มือ (แก้ id ไม่ให้ซ้ำ) -->
+        <div class="card card--list" id="manuals">
+          <div class="list-title">คู่มือ 📒📖📋</div>
+          <p class="list-desc">คู่มืออื่นๆ</p>
+          <ul class="list-links">
+            <li><a href="https://drive.google.com/file/d/15les1HdIiCxfCEQWsJf8kqt2Vw80muCk/view?usp=sharing" target="_blank" rel="noopener" title="ฟอร์ม 1 คู่มือ">1) คู่มือการเปิดใช้งาน Email บริษัท 📋</a></li>
+            <li><a href="https://drive.google.com/file/d/1tKXSneiE3bQAL2xdtFsBnOBKCx18YE3X/view?usp=sharing" target="_blank" rel="noopener" title="ฟอร์ม 2 คู่มือ">2) คู่มือการใช้งาน Appsheet แจ้งซ่อม 📋</a></li>
+            <li><a href="index.html" target="_blank" rel="noopener" title="ฟอร์ม 3 คู่มือ">3) - </a></li>
+            <li><a href="index.html" target="_blank" rel="noopener" title="ฟอร์ม 4 คู่มือ">4) - </a></li>
+          </ul>
+        </div>
+
+        <!-- อื่น ๆ (คง id=others) -->
+        <div class="card card--list" id="others">
+          <div class="list-title">อื่น ๆ</div>
+          <p class="list-desc">Data Center</p>
+          <ul class="list-links">
+            <li><a href="https://fl-023985485.sg3.quickconnect.to/#/signin" target="_blank" rel="noopener" title="ฟอร์ม 1 อื่น ๆ">1) NAS Sharedata Foodlibrary</a></li>
+            <li><a href="https://docs.google.com/spreadsheets/d/1Ocl_eJSbtGtRiihgXr5DI3bTOCc1HY3ByP37nXF4css/edit?gid=0#gid=0" target="_blank" rel="noopener" title="ฟอร์ม 2 อื่น ๆ">2) ข้อมูล IT</a></li>
+            <li><a href="index.html" target="_blank" rel="noopener" title="ฟอร์ม 3 อื่น ๆ">3) - </a></li>
+            <li><a href="index.html" target="_blank" rel="noopener" title="ฟอร์ม 4 อื่น ๆ">4) - </a></li>
+          </ul>
+        </div>
 
       </div>
     </section>
@@ -386,5 +502,84 @@ body::before {
       document.getElementById('year').textContent = new Date().getFullYear();
     </script>
   </footer>
+
+  <!-- =========================================================
+       ===== Board Mini Script (Mock) — Phase 1 =====
+       เปลี่ยนเป็น fetch(API_URL) ตอน Phase 2 (Sheet+Apps Script)
+       ========================================================= -->
+  <script>
+    (function(){
+      const BOARD_MINI_MAX = 5;
+
+      // Mock Posts (Phase 1)
+      const BOARD_MOCK = [
+        { id:"BD-0007", type:"URGENT", pinned:true,  title:"ระบบเบิกวัตถุดิบ RSC ปิดปรับปรุง 14:00–16:00", branch:"ทุกสาขา", time:"13/01/69 08:10" },
+        { id:"BD-0006", type:"NOTICE", pinned:true,  title:"ประกาศ: ตารางเวรส่งของครัวกลางสัปดาห์นี้",       branch:"ทุกสาขา", time:"13/01/69 07:40" },
+        { id:"BD-0005", type:"TASK",   pinned:false, title:"แจ้งงาน: เปลี่ยนหัวฉีดล้างจาน (TTMG)",           branch:"TTMG",    time:"13/01/69 07:15" },
+        { id:"BD-0003", type:"NOTICE", pinned:false, title:"อัปเดต: Portal เพิ่มเมนู HR Forms ใหม่",          branch:"ทุกสาขา", time:"12/01/69 12:05" },
+        { id:"BD-0004", type:"EVENT",  pinned:false, title:"กิจกรรม: Training มาตรฐานความสะอาด (Office)",    branch:"Office",  time:"14/01/69 10:00" },
+      ];
+
+      function typeLabel(t){
+        return t==="URGENT" ? "ประกาศด่วน"
+          : t==="NOTICE" ? "ข่าวสาร"
+          : t==="TASK" ? "แจ้งงาน"
+          : t==="EVENT" ? "กิจกรรม" : "อื่น ๆ";
+      }
+
+      function typeColor(t){
+        return t==="URGENT" ? "#ff3b30"
+          : t==="NOTICE" ? "#2f80ed"
+          : t==="TASK" ? "#19a05b"
+          : t==="EVENT" ? "#f2c94c" : "#8a8f98";
+      }
+
+      function renderBoardMini(){
+        const el = document.getElementById("boardMiniList");
+        const empty = document.getElementById("boardMiniEmpty");
+        if(!el) return;
+
+        const items = [...BOARD_MOCK]
+          .sort((a,b)=> (b.pinned?1:0)-(a.pinned?1:0))
+          .slice(0, BOARD_MINI_MAX);
+
+        if(items.length === 0){
+          if(empty) empty.style.display = "block";
+          return;
+        }
+        if(empty) empty.style.display = "none";
+
+        el.innerHTML = items.map(p=>{
+          const color = typeColor(p.type);
+          return `
+            <a class="board-mini-card" href="./board-demo.html" title="เปิดบอร์ดเต็ม">
+              <div class="board-mini-accent" style="background:${color}"></div>
+              <div class="board-mini-badge">
+                <span class="board-mini-dot" style="background:${color}"></span>
+                ${typeLabel(p.type)}
+              </div>
+              <div class="board-mini-h">${escapeHtml(p.title)}</div>
+              <div class="board-mini-meta">
+                <span>📍 ${escapeHtml(p.branch)}</span>
+                <span>⏰ ${escapeHtml(p.time)}</span>
+                <span style="margin-left:auto;opacity:.7">${escapeHtml(p.id)}</span>
+              </div>
+            </a>
+          `;
+        }).join("");
+      }
+
+      function escapeHtml(str){
+        return String(str)
+          .replaceAll("&","&amp;")
+          .replaceAll("<","&lt;")
+          .replaceAll(">","&gt;")
+          .replaceAll('"',"&quot;")
+          .replaceAll("'","&#039;");
+      }
+
+      document.addEventListener("DOMContentLoaded", renderBoardMini);
+    })();
+  </script>
 </body>
 </html>
